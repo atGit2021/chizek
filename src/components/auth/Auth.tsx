@@ -1,10 +1,28 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 
-const Auth = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  
+interface AuthProps<T> {
+  submitLabel: string;
+  onSubmit: (credentials: T) => Promise<void>;
+  children: React.ReactNode;
+  defaultValues: T;
+}
+
+const Auth = <T extends {}>({
+  submitLabel,
+  onSubmit,
+  children,
+  defaultValues
+}: AuthProps<T>) => {
+  const [fields, setFields] = useState<T>(defaultValues);
+
+  const handleChange = (key: keyof T, value: string) => {
+    setFields((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
   return (
     <Stack
       spacing={3}
@@ -18,9 +36,20 @@ const Auth = () => {
         justifyContent: "center",
       }}
     >
-      <TextField type="email" label="Email" variant="outlined" value={email} onChange={(event) => setEmail(event.target.value)} />
-      <TextField type="password" label="Password" variant="outlined" value={password} onChange={(event) => setPassword(event.target.value)}/>
-      <Button variant="contained">Login</Button>
+      {Object.entries(fields).map(([key, value]) => (
+        <TextField
+          key={key}
+          type={key}
+          label={key}
+          variant="outlined"
+          value={value}
+          onChange={(event) => handleChange(key as keyof T, event.target.value)}
+        />
+      ))}
+      <Button variant="contained" onClick={() => onSubmit(fields)}>
+        {submitLabel}
+      </Button>
+      {children}
     </Stack>
   );
 };
