@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Link as MUILink } from "@mui/material";
-import Auth from "./Auth";
+import Auth from "../services/auth/Auth";
 
 interface LoginData {
   email: string;
