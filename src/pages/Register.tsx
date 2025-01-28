@@ -14,7 +14,6 @@ const Register = () => {
   const [createUser] = useCreateUser();
 
   const handleRegister = async ({ email, password }: RegistrationData) => {
-    console.log("Registering: ", email);
     await createUser({
       variables: {
         createUserInput: {
