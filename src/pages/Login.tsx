@@ -23,9 +23,9 @@ const Login = () => {
       onSubmit={handleLogin}
       defaultValues={initialLoginData}
     >
-      <Link to={"/register"} style={{ alignSelf: "center" }}>
-        <MUILink>Register</MUILink>
-      </Link>
+      <MUILink component={Link} to="/register" style={{ alignSelf: "center" }}>
+        Register
+      </MUILink>
     </Auth>
   );
 };
