@@ -14,14 +14,18 @@ const Register = () => {
   const [createUser] = useCreateUser();
 
   const handleRegister = async ({ email, password }: RegistrationData) => {
-    await createUser({
-      variables: {
-        createUserInput: {
-          email,
-          password,
+    try {
+      await createUser({
+        variables: {
+          createUserInput: {
+            email,
+            password,
+          },
         },
-      },
-    });
+      });
+    } catch (error) {
+      console.log("Registration Error: ", error);  //TODO: implement error handling
+    }
   };
 
   const initialRegistrationData = {
