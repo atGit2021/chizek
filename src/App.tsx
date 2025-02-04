@@ -2,7 +2,7 @@ import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/materia
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/Routes";
 import { ApolloProvider } from "@apollo/client";
-import client from "./constants/apollo-client";
+import client from "./api/apollo-client";
 
 
 const darkTheme = createTheme({

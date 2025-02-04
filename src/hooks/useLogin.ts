@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { API_URL } from "../constants/urls";
-import client from "../constants/apollo-client";
+import { API_URL } from "../api/urls";
+import client from "../api/apollo-client";
 
 interface LoginRequest {
   email: string;
