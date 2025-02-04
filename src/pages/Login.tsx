@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Link as MUILink } from "@mui/material";
 import Auth from "../services/auth/Auth";
+import { useLogin } from "../hooks/useLogin";
 
 interface LoginData {
   email: string;
@@ -8,10 +9,8 @@ interface LoginData {
 }
 
 const Login = () => {
-  const handleLogin = async (credentials: LoginData) => {
-    console.log("Logging in with", credentials);
-  };
-
+  const { login, error } = useLogin();
+  
   const initialLoginData = {
     email: "",
     password: "",
@@ -20,7 +19,7 @@ const Login = () => {
   return (
     <Auth<LoginData>
       submitLabel="Login"
-      onSubmit={handleLogin}
+      onSubmit={(request) =>login(request)}
       defaultValues={initialLoginData}
     >
       <MUILink component={Link} to="/register" style={{ alignSelf: "center" }}>
