@@ -9,7 +9,7 @@ interface LoginData {
 }
 
 const Login = () => {
-  const { login, error } = useLogin();
+  const { login } = useLogin();
   
   const initialLoginData = {
     email: "",
