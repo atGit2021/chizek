@@ -9,7 +9,7 @@ interface LoginData {
 }
 
 const Login = () => {
-  const { login } = useLogin();
+  const { login, error } = useLogin();
   
   const initialLoginData = {
     email: "",
@@ -19,8 +19,9 @@ const Login = () => {
   return (
     <Auth<LoginData>
       submitLabel="Login"
-      onSubmit={(request) =>login(request)}
+      onSubmit={(request) => login(request)}
       defaultValues={initialLoginData}
+      error={error}
     >
       <MUILink component={Link} to="/register" style={{ alignSelf: "center" }}>
         Register

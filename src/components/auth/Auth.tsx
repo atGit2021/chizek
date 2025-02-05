@@ -6,13 +6,15 @@ interface AuthProps<T> {
   onSubmit: (credentials: T) => Promise<void>;
   children: React.ReactNode;
   defaultValues: T;
+  error?: string;
 }
 
 const Auth = <T extends {}>({
   submitLabel,
   onSubmit,
   children,
-  defaultValues
+  defaultValues,
+  error,
 }: AuthProps<T>) => {
   const [fields, setFields] = useState<T>(defaultValues);
 
@@ -44,6 +46,8 @@ const Auth = <T extends {}>({
           variant="outlined"
           value={value}
           onChange={(event) => handleChange(key as keyof T, event.target.value)}
+          error={!!error}
+          helperText={error}
         />
       ))}
       <Button variant="contained" onClick={() => onSubmit(fields)}>
