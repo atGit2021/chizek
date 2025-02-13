@@ -7,7 +7,6 @@ interface GuardProps {
 
 const Guard = ({ children }: GuardProps) => {
   const { data: user } = useGetCurrentUser();
-  console.log(user);
   return (
     <>
       {excludedRoutes.includes(window.location.pathname)
