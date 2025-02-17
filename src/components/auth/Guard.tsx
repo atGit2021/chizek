@@ -6,11 +6,12 @@ interface GuardProps {
 }
 
 const Guard = ({ children }: GuardProps) => {
-  const { data: user } = useGetCurrentUser();
-  console.log(user);
+  const isExcluded = excludedRoutes.includes(window.location.pathname);
+  
+  const { data: user } = useGetCurrentUser({ skip: isExcluded });
   return (
     <>
-      {excludedRoutes.includes(window.location.pathname)
+      {isExcluded
         ? children
         : user && children}
     </>
