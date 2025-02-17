@@ -8,10 +8,14 @@ const GET_CURRENT_USER = gql`
             email
         }
     }
-`
+`;
 
-const useGetCurrentUser = () => {
-    return useQuery<{ getCurrentUser: User }>(GET_CURRENT_USER)
+interface UseGetCurrentUserProps {
+    skip?: boolean;
+}
+
+const useGetCurrentUser = ({ skip = false }: UseGetCurrentUserProps = {}) => {
+    return useQuery<{ getCurrentUser: User }>(GET_CURRENT_USER, { skip })
 }
 
 export { useGetCurrentUser }
