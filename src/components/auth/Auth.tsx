@@ -1,5 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetCurrentUser } from "../../hooks/useGetCurrentUser";
+import { useNavigate } from "react-router-dom";
 
 interface AuthProps<T> {
   submitLabel: string;
@@ -17,6 +19,14 @@ const Auth = <T extends {}>({
   error,
 }: AuthProps<T>) => {
   const [fields, setFields] = useState<T>(defaultValues);
+  const { data } = useGetCurrentUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data) {
+      navigate('/');
+    }
+  }, [data, navigate]);
 
   const handleChange = (key: keyof T, value: string) => {
     setFields((prev) => ({

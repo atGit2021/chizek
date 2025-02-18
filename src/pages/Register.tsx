@@ -4,6 +4,7 @@ import Auth from "../components/auth/Auth";
 import { useCreateUser } from "../hooks/useCreateUser";
 import { useState } from "react";
 import { extractErrorMessage } from "../utils/errors";
+import { useLogin } from "../hooks/useLogin";
 
 interface RegistrationData {
   email: string;
@@ -15,6 +16,7 @@ interface RegistrationData {
 const Register = () => {
   const [createUser] = useCreateUser();
   const [error, setError] = useState("");
+  const { login } = useLogin();
 
   const handleRegister = async ({ email, password }: RegistrationData) => {
     try {
@@ -26,6 +28,7 @@ const Register = () => {
           },
         },
       });
+      await login({ email, password })
       setError("");
     } catch (error) {
       const errorMessage = extractErrorMessage(error);

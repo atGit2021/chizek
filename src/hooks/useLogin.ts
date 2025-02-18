@@ -19,15 +19,15 @@ const useLogin = () => {
       body: JSON.stringify(request),
     });
     if (!res.ok) {
-      if (res.status === 401) {
-        setError("Credentials are not valid.");
-      } else {
-        setError("Unknown error occured");
-      }
-        return;
+      setError(
+        res.status === 401
+          ? "Credentials are not valid."
+          : "Unknown error occurred"
+      );
+      return;
     }
     setError("");
-    await client.refetchQueries({ include: 'active' });
+    await client.refetchQueries({ include: "active" });
   };
 
   return { login, error };
