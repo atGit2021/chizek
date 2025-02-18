@@ -1,5 +1,5 @@
 import excludedRoutes from "../../constants/excluded-routes";
-import { useGetCurrentUser } from "../../hooks/useGetStoredUser";
+import { useGetCurrentUser } from "../../hooks/useGetCurrentUser";
 
 interface GuardProps {
   children: JSX.Element;
