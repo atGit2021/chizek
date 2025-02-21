@@ -10,6 +10,7 @@ import { ApolloProvider } from "@apollo/client";
 import client from "./constants/api/apollo-client";
 import { AuthProvider } from "./context/AuthProvider";
 import LogoutListener from "./components/auth/LogoutListener";
+import Header from "./components/header/Header";
 
 const darkTheme = createTheme({
   palette: {
@@ -22,6 +23,7 @@ const App = () => {
     <ApolloProvider client={client}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
+        <Header />
         <Container>
           <RouterProvider router={router}>
             <AuthProvider>
