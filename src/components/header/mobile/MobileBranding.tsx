@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import GamesIcon from '@mui/icons-material/Games';
-import router from "../../routes/Routes";
+import router from "../../../routes/Routes";
 
 const MobileBranding = () => {
   return (
