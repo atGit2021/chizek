@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useGetCurrentUser } from "../../hooks/useGetCurrentUser";
-import excludedRoutes from "../../constants/excluded-routes";
+import { useGetCurrentUser } from "../hooks/useGetCurrentUser";
+import excludedRoutes from "../constants/excluded-routes";
 
 const PrivateRoute = () => {
   const isExcluded = excludedRoutes.includes(window.location.pathname);
