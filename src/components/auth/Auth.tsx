@@ -2,6 +2,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useGetCurrentUser } from "../../hooks/useGetCurrentUser";
 import { useNavigate } from "react-router-dom";
+import { authenticatedVar } from "../../constants/authenticated";
 
 interface AuthProps<T> {
   submitLabel: string;
@@ -19,14 +20,15 @@ const Auth = <T extends {}>({
   error,
 }: AuthProps<T>) => {
   const [fields, setFields] = useState<T>(defaultValues);
-  const { data } = useGetCurrentUser();
+  const { data: user } = useGetCurrentUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data) {
+    if (user) {
+      authenticatedVar(true);
       navigate('/');
     }
-  }, [data, navigate]);
+  }, [user, navigate]);
 
   const handleChange = (key: keyof T, value: string) => {
     setFields((prev) => ({
