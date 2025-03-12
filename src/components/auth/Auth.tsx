@@ -26,6 +26,7 @@ const Auth = <T extends {}>({
   useEffect(() => {
     if (user) {
       authenticatedVar(true);
+      sessionStorage.setItem("authenticated", "true");
       navigate('/');
     }
   }, [user, navigate]);
