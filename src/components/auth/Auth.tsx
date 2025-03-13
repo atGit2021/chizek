@@ -12,7 +12,7 @@ interface AuthProps<T> {
   error?: string;
 }
 
-const Auth = <T extends {}>({
+const Auth = <T extends object>({
   submitLabel,
   onSubmit,
   children,
