@@ -10,6 +10,9 @@ export default [
     languageOptions: {
       globals: globals.browser
     },
+    parserOptions: {
+      project: './tsconfig.json',
+    },
     settings: {
       react: {
         version: "detect",
