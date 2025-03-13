@@ -12,7 +12,7 @@ interface AuthProps<T> {
   error?: string;
 }
 
-const Auth = <T extends {}>({
+const Auth = <T extends object>({
   submitLabel,
   onSubmit,
   children,
@@ -26,6 +26,7 @@ const Auth = <T extends {}>({
   useEffect(() => {
     if (user) {
       authenticatedVar(true);
+      sessionStorage.setItem("authenticated", "true");
       navigate('/');
     }
   }, [user, navigate]);

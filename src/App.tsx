@@ -9,12 +9,21 @@ import router from "./routes/Routes";
 import { ApolloProvider } from "@apollo/client";
 import client from "./constants/api/apollo-client";
 import Header from "./components/header/Header";
+import { authenticatedVar } from "./constants/authenticated";
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
 });
+
+const storedAuth = sessionStorage.getItem("authenticated");
+
+if (storedAuth === "true") {
+  authenticatedVar(true);
+} else {
+  authenticatedVar(false);
+}
 
 const App = () => {
   return (

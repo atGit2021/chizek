@@ -4,6 +4,7 @@ import router from "../routes/Routes";
 
 export const onLogout = async () => {
   authenticatedVar(false);
+  sessionStorage.removeItem("authenticated");
   await client.clearStore();
   router.navigate("/login");
 };
