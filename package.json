@@ -24,7 +24,8 @@
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -50,15 +51,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-syntax-flow": "^7.26.0",
     "@babel/plugin-transform-react-jsx": "^7.25.9",
-    "@eslint/js": "8.37.0",
     "@testing-library/react-hooks": "^8.0.1",
-    "@types/jest": "^29.5.14",
-    "@typescript-eslint/eslint-plugin": "5.35.0",
-    "@typescript-eslint/parser": "5.35.0",
-    "eslint": "8.37.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "globals": "^16.0.0",
-    "ts-standard": "^12.0.2"
+    "@types/jest": "^29.5.14"
   }
 }
