@@ -10,6 +10,7 @@ import { ApolloProvider } from "@apollo/client";
 import client from "./constants/api/apollo-client";
 import Header from "./components/header/Header";
 import { authenticatedVar } from "./constants/authenticated";
+import Snackbar from "./components/snackbar/Snackbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -34,6 +35,7 @@ const App = () => {
         <RouterProvider router={router}>
           <Container></Container>
         </RouterProvider>
+        <Snackbar />
       </ThemeProvider>
     </ApolloProvider>
   );

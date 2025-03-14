@@ -3,7 +3,7 @@ import { Link as MUILink } from "@mui/material";
 import Auth from "../components/auth/Auth";
 import { useCreateUser } from "../hooks/useCreateUser";
 import { useState } from "react";
-import { extractErrorMessage } from "../utils/errors";
+import { extractErrorMessage } from "../utils/extractErrorMessage";
 import { useLogin } from "../hooks/useLogin";
 
 interface RegistrationData {
