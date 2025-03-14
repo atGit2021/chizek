@@ -5,6 +5,7 @@ import { useCreateUser } from "../hooks/useCreateUser";
 import { useState } from "react";
 import { extractErrorMessage } from "../utils/extractErrorMessage";
 import { useLogin } from "../hooks/useLogin";
+import { UNKNOWN_ERROR_MESSAGE } from "../constants/errors";
 
 interface RegistrationData {
   email: string;
@@ -36,7 +37,7 @@ const Register = () => {
         setError(errorMessage);
         return;
       }
-      setError("Unkown error occured.");
+      setError(UNKNOWN_ERROR_MESSAGE);
     }
   };
 
