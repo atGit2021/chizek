@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { API_URL } from "../constants/api/urls";
 import client from "../constants/api/apollo-client";
+import {
+  UNKNOWN_ERROR_MESSAGE,
+  UNKNOWN_ERROR_SNACK_MESSAGE,
+} from "../constants/errors";
+import { snackVar } from "../constants/snack";
 
 interface LoginRequest {
   email: string;
@@ -19,11 +24,11 @@ const useLogin = () => {
       body: JSON.stringify(request),
     });
     if (!res.ok) {
-      setError(
-        res.status === 401
-          ? "Credentials are not valid."
-          : "Unknown error occurred"
-      );
+      if (res.status === 401) {
+        setError("Credentials are not valid.");
+      } else {
+        snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
+      }
       return;
     }
     setError("");
