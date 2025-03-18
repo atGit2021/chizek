@@ -10,7 +10,7 @@ const useLogout = () => {
       if (!res.ok) {
         throw new Error("Error logging out.");
       }
-    } catch (err) {
+    } catch {
       throw new Error(UNKNOWN_ERROR_MESSAGE);
     }
   };
