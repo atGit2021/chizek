@@ -12,19 +12,19 @@ const extractErrorMessage = (err: unknown) => {
   if (isGraphQLError(err)) {
     const errorMessage =
       err.graphQLErrors[0]?.extensions?.originalError?.message;
-    if (!errorMessage) return "";
+    if (!errorMessage) return '';
     return formatErrorMessage(
-      Array.isArray(errorMessage) ? errorMessage[0] : errorMessage
+      Array.isArray(errorMessage) ? errorMessage[0] : errorMessage,
     );
   }
-  return "";
+  return '';
 };
 
 function isGraphQLError(error: unknown): error is GraphQLError {
   return (
-    typeof error === "object" &&
+    typeof error === 'object' &&
     error !== null &&
-    "graphQLErrors" in error &&
+    'graphQLErrors' in error &&
     Array.isArray((error as GraphQLError).graphQLErrors)
   );
 }

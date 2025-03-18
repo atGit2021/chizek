@@ -3,24 +3,24 @@ import {
   createTheme,
   CssBaseline,
   ThemeProvider,
-} from "@mui/material";
-import { RouterProvider } from "react-router-dom";
-import router from "./routes/Routes";
-import { ApolloProvider } from "@apollo/client";
-import client from "./constants/api/apollo-client";
-import Header from "./components/header/Header";
-import { authenticatedVar } from "./constants/authenticated";
-import Snackbar from "./components/snackbar/Snackbar";
+} from '@mui/material';
+import { RouterProvider } from 'react-router-dom';
+import router from './routes/Routes';
+import { ApolloProvider } from '@apollo/client';
+import client from './constants/api/apollo-client';
+import Header from './components/header/Header';
+import { authenticatedVar } from './constants/authenticated';
+import Snackbar from './components/snackbar/Snackbar';
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
   },
 });
 
-const storedAuth = sessionStorage.getItem("authenticated");
+const storedAuth = sessionStorage.getItem('authenticated');
 
-if (storedAuth === "true") {
+if (storedAuth === 'true') {
   authenticatedVar(true);
 } else {
   authenticatedVar(false);

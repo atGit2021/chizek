@@ -6,12 +6,12 @@ import {
   MenuItem,
   Tooltip,
   Typography,
-} from "@mui/material";
-import { useState } from "react";
-import { useLogout } from "../../hooks/useLogout";
-import { onLogout } from "../../utils/onLogout";
-import { snackVar } from "../../constants/snack";
-import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../../constants/errors";
+} from '@mui/material';
+import { useState } from 'react';
+import { useLogout } from '../../hooks/useLogout';
+import { onLogout } from '../../utils/onLogout';
+import { snackVar } from '../../constants/snack';
+import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../../constants/errors';
 
 const Settings = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -33,17 +33,17 @@ const Settings = () => {
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: "45px" }}
+        sx={{ mt: '45px' }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         keepMounted
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
@@ -60,7 +60,7 @@ const Settings = () => {
             }
           }}
         >
-          <Typography sx={{ textAlign: "center" }}>Logout</Typography>
+          <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
         </MenuItem>
       </Menu>
     </Box>
