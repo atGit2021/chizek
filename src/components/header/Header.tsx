@@ -18,7 +18,7 @@ const pages: Page[] = [
   },
   {
     title: "Forum",
-    path: "/",
+    path: "/forum",
   },
 ];
 

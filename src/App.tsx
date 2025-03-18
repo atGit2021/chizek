@@ -34,16 +34,9 @@ const App = () => {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Header />
-        <Grid container spacing={2}>
-          <Grid size={{ md: 3 }}>
-            <ChatList />
-          </Grid>
-          <Grid size={{ md: 9 }}>
-            <RouterProvider router={router}>
-              <Container></Container>
-            </RouterProvider>
-          </Grid>
-        </Grid>
+        <RouterProvider router={router}>
+          <Container></Container>
+        </RouterProvider>
         <Snackbar />
       </ThemeProvider>
     </ApolloProvider>
