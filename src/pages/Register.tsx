@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import { Link as MUILink } from "@mui/material";
-import Auth from "../components/auth/Auth";
-import { useCreateUser } from "../hooks/useCreateUser";
-import { useState } from "react";
-import { extractErrorMessage } from "../utils/extractErrorMessage";
-import { useLogin } from "../hooks/useLogin";
-import { UNKNOWN_ERROR_MESSAGE } from "../constants/errors";
+import { Link } from 'react-router-dom';
+import { Link as MUILink } from '@mui/material';
+import Auth from '../components/auth/Auth';
+import { useCreateUser } from '../hooks/useCreateUser';
+import { useState } from 'react';
+import { extractErrorMessage } from '../utils/extractErrorMessage';
+import { useLogin } from '../hooks/useLogin';
+import { UNKNOWN_ERROR_MESSAGE } from '../constants/errors';
 
 interface RegistrationData {
   email: string;
@@ -16,7 +16,7 @@ interface RegistrationData {
 
 const Register = () => {
   const [createUser] = useCreateUser();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const { login } = useLogin();
 
   const handleRegister = async ({ email, password }: RegistrationData) => {
@@ -30,7 +30,7 @@ const Register = () => {
         },
       });
       await login({ email, password });
-      setError("");
+      setError('');
     } catch (error) {
       const errorMessage = extractErrorMessage(error);
       if (errorMessage) {
@@ -42,10 +42,10 @@ const Register = () => {
   };
 
   const initialRegistrationData = {
-    username: "",
-    email: "",
-    password: "",
-    phone: "",
+    username: '',
+    email: '',
+    password: '',
+    phone: '',
   };
 
   return (
@@ -55,7 +55,7 @@ const Register = () => {
       defaultValues={initialRegistrationData}
       error={error}
     >
-      <MUILink component={Link} to="/login" style={{ alignSelf: "center" }}>
+      <MUILink component={Link} to="/login" style={{ alignSelf: 'center' }}>
         Login
       </MUILink>
     </Auth>

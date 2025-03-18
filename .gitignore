@@ -146,5 +146,5 @@ dist
 
 # misc
 .DS_Store
-
+/cache
 

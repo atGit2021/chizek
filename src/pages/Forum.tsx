@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import ChatList from "../components/chat-list/ChatList";
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import ChatList from '../components/chat-list/ChatList';
 
 const Forum = () => {
   return (

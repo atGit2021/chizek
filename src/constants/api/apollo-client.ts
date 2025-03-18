@@ -1,8 +1,8 @@
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
-import { API_URL } from "./urls";
-import excludedRoutes from "../excluded-routes";
-import { onLogout } from "../../utils/onLogout";
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { API_URL } from './urls';
+import excludedRoutes from '../excluded-routes';
+import { onLogout } from '../../utils/onLogout';
 
 interface OriginalError {
   statusCode: number;

@@ -1,40 +1,40 @@
-import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import HomePage from "../pages/HomePage";
-import PrivateRoute from "./PrivateRoute";
-import NotFoundPage from "../pages/NotFoundPage";
-import Forum from "../pages/Forum";
+import { createBrowserRouter } from 'react-router-dom';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import HomePage from '../pages/HomePage';
+import PrivateRoute from './PrivateRoute';
+import NotFoundPage from '../pages/NotFoundPage';
+import Forum from '../pages/Forum';
 
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
   },
   {
-    path: "/",
+    path: '/',
     element: <PrivateRoute />,
     children: [
       {
-        path: "",
+        path: '',
         element: <HomePage />,
       },
       {
-        path: "home",
+        path: 'home',
         element: <HomePage />,
       },
       {
-        path: "forum",
+        path: 'forum',
         element: <Forum />,
       },
     ],
   },
   {
-    path: "*",
+    path: '*',
     element: <NotFoundPage />,
   },
 ]);
