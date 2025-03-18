@@ -29,7 +29,7 @@ const Register = () => {
           },
         },
       });
-      await login({ email, password })
+      await login({ email, password });
       setError("");
     } catch (error) {
       const errorMessage = extractErrorMessage(error);
