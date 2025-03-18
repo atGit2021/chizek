@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { API_URL } from "../constants/api/urls";
 import client from "../constants/api/apollo-client";
-import {
-  UNKNOWN_ERROR_MESSAGE,
-  UNKNOWN_ERROR_SNACK_MESSAGE,
-} from "../constants/errors";
+import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../constants/errors";
 import { snackVar } from "../constants/snack";
 
 interface LoginRequest {

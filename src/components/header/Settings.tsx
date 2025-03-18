@@ -55,7 +55,7 @@ const Settings = () => {
               await logout();
               onLogout();
               handleCloseUserMenu();
-            } catch (err) {
+            } catch {
               snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
             }
           }}
