@@ -1,26 +1,26 @@
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
 import GamesIcon from '@mui/icons-material/Games';
-import router from "../../../routes/Routes";
+import router from '../../../routes/Routes';
 
 const MobileBranding = () => {
   return (
     <>
-      <GamesIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+      <GamesIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
       <Typography
         variant="h5"
         noWrap
         component="a"
-        onClick={() => router.navigate("/")}
+        onClick={() => router.navigate('/')}
         sx={{
           mr: 2,
-          display: { xs: "flex", md: "none" },
+          display: { xs: 'flex', md: 'none' },
           flexGrow: 1,
-          fontFamily: "monospace",
-          cursor: "pointer",
+          fontFamily: 'monospace',
+          cursor: 'pointer',
           fontWeight: 700,
-          letterSpacing: ".3rem",
-          color: "inherit",
-          textDecoration: "none",
+          letterSpacing: '.3rem',
+          color: 'inherit',
+          textDecoration: 'none',
         }}
       >
         CHIZEK

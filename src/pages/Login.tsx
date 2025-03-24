@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { Link as MUILink } from "@mui/material";
-import Auth from "../components/auth/Auth";
-import { useLogin } from "../hooks/useLogin";
+import { Link } from 'react-router-dom';
+import { Link as MUILink } from '@mui/material';
+import Auth from '../components/auth/Auth';
+import { useLogin } from '../hooks/useLogin';
 
 interface LoginData {
   email: string;
@@ -10,10 +10,10 @@ interface LoginData {
 
 const Login = () => {
   const { login, error } = useLogin();
-  
+
   const initialLoginData = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
   return (
@@ -23,7 +23,7 @@ const Login = () => {
       defaultValues={initialLoginData}
       error={error}
     >
-      <MUILink component={Link} to="/register" style={{ alignSelf: "center" }}>
+      <MUILink component={Link} to="/register" style={{ alignSelf: 'center' }}>
         Register
       </MUILink>
     </Auth>

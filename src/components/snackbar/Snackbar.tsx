@@ -1,16 +1,16 @@
-import { useReactiveVar } from "@apollo/client";
-import { Snackbar as MUISnackbar, SnackbarCloseReason } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import { snackVar } from "../../constants/snack";
+import { useReactiveVar } from '@apollo/client';
+import { Snackbar as MUISnackbar, SnackbarCloseReason } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import { snackVar } from '../../constants/snack';
 
 const Snackbar = () => {
   const snack = useReactiveVar(snackVar);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason
+    reason?: SnackbarCloseReason,
   ) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
 
@@ -30,7 +30,7 @@ const Snackbar = () => {
               onClose={handleClose}
               severity={snack?.type}
               variant="filled"
-              sx={{ width: "100%" }}
+              sx={{ width: '100%' }}
             >
               {snack?.message}
             </Alert>

@@ -5,13 +5,13 @@
 # You may wish to alter this file to override the set of languages analyzed,
 # or to provide custom queries or build logic.
 #
-name: "CodeQL Advanced"
+name: 'CodeQL Advanced'
 
 on:
   push:
-    branches: ["develop", "main"]
+    branches: ['develop', 'main']
   pull_request:
-    branches: ["develop", "main"]
+    branches: ['develop', 'main']
 
 jobs:
   analyze:
@@ -39,20 +39,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-    # Add any setup steps before running the `github/codeql-action/init` action.
-    # e.g. installing compilers or runtimes (`actions/setup-node`
-    # or others). This is typically only required for manual builds.
-    # - name: Setup runtime (example)
-    #   uses: actions/setup-example@v1
+      # Add any setup steps before running the `github/codeql-action/init` action.
+      # e.g. installing compilers or runtimes (`actions/setup-node`
+      # or others). This is typically only required for manual builds.
+      # - name: Setup runtime (example)
+      #   uses: actions/setup-example@v1
 
-    # Initializes the CodeQL tools for scanning.
+      # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
 
-    # Command-line programs to run using the OS shell.
+      # Command-line programs to run using the OS shell.
       - if: matrix.build-mode == 'manual'
         shell: bash
         run: |
@@ -67,4 +67,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:${{matrix.language}}"
+          category: '/language:${{matrix.language}}'

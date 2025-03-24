@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { API_URL } from "../constants/api/urls";
-import client from "../constants/api/apollo-client";
-import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../constants/errors";
-import { snackVar } from "../constants/snack";
+import { useState } from 'react';
+import { API_URL } from '../constants/api/urls';
+import client from '../constants/api/apollo-client';
+import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
+import { snackVar } from '../constants/snack';
 
 interface LoginRequest {
   email: string;
@@ -14,22 +14,22 @@ const useLogin = () => {
 
   const login = async (request: LoginRequest) => {
     const res = await fetch(`${API_URL}/auth/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(request),
     });
     if (!res.ok) {
       if (res.status === 401) {
-        setError("Credentials are not valid.");
+        setError('Credentials are not valid.');
       } else {
         snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
       }
       return;
     }
-    setError("");
-    await client.refetchQueries({ include: "active" });
+    setError('');
+    await client.refetchQueries({ include: 'active' });
   };
 
   return { login, error };

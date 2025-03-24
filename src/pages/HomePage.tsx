@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
 
 const HomePage = () => {
-    return (
+  return (
     <Box
       display="flex"
       justifyContent="center"
@@ -10,7 +10,7 @@ const HomePage = () => {
     >
       <h1>Welcome to the Home Page</h1>
     </Box>
-    );
+  );
 };
 
 export default HomePage;
