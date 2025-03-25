@@ -1,4 +1,19 @@
-import { Box, Modal, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  InputBase,
+  Modal,
+  Paper,
+  Stack,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { MouseEvent, useState } from 'react';
 
 interface ChatListAddProps {
   open: boolean;
@@ -6,11 +21,16 @@ interface ChatListAddProps {
 }
 
 const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
+  const [isPrivate, setIsPrivate] = useState(true);
+  const handleModalClick = (event: MouseEvent) => {
+    event.stopPropagation();
+  };
+
   return (
     <Modal open={open} onClick={handleClose}>
       <Box
         sx={{
-          position: 'absolute' as const,
+          position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -20,10 +40,36 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
           boxShadow: 24,
           p: 4,
         }}
+        onClick={handleModalClick}
       >
-        <Typography variant="h6" component="h2">
-          Add Chat
-        </Typography>
+        <Stack spacing={2}>
+          <Typography variant="h6" component="h2">
+            Add Chat
+          </Typography>
+          <FormGroup>
+            <FormControlLabel
+              style={{ width: 0 }}
+              control={
+                <Switch
+                  checked={isPrivate}
+                  onChange={(event) => setIsPrivate(event.target.checked)}
+                />
+              }
+              label="Private"
+            ></FormControlLabel>
+          </FormGroup>
+          {isPrivate ? (
+            <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}>
+              <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search Users" />
+              <IconButton sx={{ p: '10px' }}>
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          ) : (
+            <TextField label="Name" />
+          )}
+          <Button variant="outlined">Save</Button>
+        </Stack>
       </Box>
     </Modal>
   );
