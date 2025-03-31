@@ -1,21 +1,21 @@
-import { gql, useQuery } from '@apollo/client';
-import { User } from '../models/User';
+import { useQuery } from '@apollo/client';
+import { graphql } from '../gql';
 
-const GET_CURRENT_USER = gql`
+const getCurrentUserDocument = graphql(`
   query getCurrentUser {
     getCurrentUser {
       _id
       email
     }
   }
-`;
+`);
 
 interface UseGetCurrentUserProps {
   skip?: boolean;
 }
 
 const useGetCurrentUser = ({ skip = false }: UseGetCurrentUserProps = {}) => {
-  return useQuery<{ getCurrentUser: User }>(GET_CURRENT_USER, { skip });
+  return useQuery(getCurrentUserDocument, { skip });
 };
 
 export { useGetCurrentUser };
