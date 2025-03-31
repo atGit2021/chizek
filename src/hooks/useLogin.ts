@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { API_URL } from '../constants/api/urls';
 import client from '../constants/api/apollo-client';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
 import { snackVar } from '../constants/snack';
@@ -13,7 +12,7 @@ const useLogin = () => {
   const [error, setError] = useState<string>();
 
   const login = async (request: LoginRequest) => {
-    const res = await fetch(`${API_URL}/auth/login`, {
+    const res = await fetch(`/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
