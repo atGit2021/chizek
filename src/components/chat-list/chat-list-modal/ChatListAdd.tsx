@@ -24,9 +24,24 @@ interface ChatListAddProps {
 const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
   const [isPrivate, setIsPrivate] = useState(true);
   const [name, setName] = useState<string | undefined>();
-  const [createForum] = useCreateForum();
+  const [createForum, { loading }] = useCreateForum();
+
   const handleModalClick = (event: MouseEvent) => {
     event.stopPropagation();
+  };
+
+  const handleSave = async () => {
+    await createForum({
+      variables: {
+        createForumInput: {
+          isPrivate,
+          name: name || undefined,
+        },
+      },
+      onCompleted: () => {
+        handleClose();
+      },
+    });
   };
 
   return (
@@ -74,20 +89,8 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
               onChange={(event) => setName(event.target.value)}
             />
           )}
-          <Button
-            variant="outlined"
-            onClick={() => {
-              createForum({
-                variables: {
-                  createForumInput: {
-                    isPrivate,
-                    name: name || undefined,
-                  },
-                },
-              });
-            }}
-          >
-            Save
+          <Button variant="outlined" onClick={handleSave} disabled={loading}>
+            {loading ? 'Saving...' : 'Save'}
           </Button>
         </Stack>
       </Box>
