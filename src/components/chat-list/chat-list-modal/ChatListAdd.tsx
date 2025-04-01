@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { MouseEvent, useState } from 'react';
+import { useCreateForum } from '../../../hooks/useCreateForum';
 
 interface ChatListAddProps {
   open: boolean;
@@ -22,8 +23,25 @@ interface ChatListAddProps {
 
 const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
   const [isPrivate, setIsPrivate] = useState(true);
+  const [name, setName] = useState<string | undefined>();
+  const [createForum, { loading }] = useCreateForum();
+
   const handleModalClick = (event: MouseEvent) => {
     event.stopPropagation();
+  };
+
+  const handleSave = async () => {
+    await createForum({
+      variables: {
+        createForumInput: {
+          isPrivate,
+          name: name || undefined,
+        },
+      },
+      onCompleted: () => {
+        handleClose();
+      },
+    });
   };
 
   return (
@@ -66,9 +84,14 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
               </IconButton>
             </Paper>
           ) : (
-            <TextField label="Name" />
+            <TextField
+              label="Name"
+              onChange={(event) => setName(event.target.value)}
+            />
           )}
-          <Button variant="outlined">Save</Button>
+          <Button variant="outlined" onClick={handleSave} disabled={loading}>
+            {loading ? 'Saving...' : 'Save'}
+          </Button>
         </Stack>
       </Box>
     </Modal>
