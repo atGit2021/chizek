@@ -1,5 +1,4 @@
 import { useLogout } from './useLogout';
-import { API_URL } from '../constants/api/urls';
 import { renderHook } from '@testing-library/react-hooks';
 
 global.fetch = jest.fn();
@@ -16,7 +15,7 @@ describe('useLogout', () => {
     const { result } = renderHook(() => useLogout());
     const logoutPromise = result.current.logout();
 
-    expect(fetch).toHaveBeenCalledWith(`${API_URL}/auth/logout`, {
+    expect(fetch).toHaveBeenCalledWith(`/auth/logout`, {
       method: 'POST',
     });
     expect(fetch).toHaveBeenCalledTimes(1);

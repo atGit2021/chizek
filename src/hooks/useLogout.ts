@@ -1,10 +1,9 @@
-import { API_URL } from '../constants/api/urls';
 import { UNKNOWN_ERROR_MESSAGE } from '../constants/errors';
 
 const useLogout = () => {
   const logout = async () => {
     try {
-      const res = await fetch(`${API_URL}/auth/logout`, {
+      const res = await fetch(`/auth/logout`, {
         method: 'POST',
       });
       if (!res.ok) {

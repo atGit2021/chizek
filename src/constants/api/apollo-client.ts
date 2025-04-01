@@ -1,6 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { API_URL } from './urls';
 import excludedRoutes from '../excluded-routes';
 import { onLogout } from '../../utils/onLogout';
 
@@ -22,7 +21,7 @@ const isOriginalError = (error: unknown): error is OriginalError => {
   return (error as OriginalError)?.statusCode !== undefined;
 };
 
-const httpLink = new HttpLink({ uri: `${API_URL}/graphql` });
+const httpLink = new HttpLink({ uri: `/graphql` });
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
