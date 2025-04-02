@@ -36,6 +36,13 @@ export type Forum = {
   userIds: Array<Scalars['String']['output']>;
 };
 
+export type ForumFilterInput = {
+  isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+  userIds?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createForum: Forum;
@@ -58,7 +65,7 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationRemoveForumArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['String']['input'];
 };
 
 
@@ -73,15 +80,22 @@ export type MutationUpdateUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  findForums: Array<Forum>;
   forum: Forum;
+  forums: Array<Forum>;
   getCurrentUser: User;
   user: User;
   users: Array<User>;
 };
 
 
+export type QueryFindForumsArgs = {
+  filterQuery?: InputMaybe<ForumFilterInput>;
+};
+
+
 export type QueryForumArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['String']['input'];
 };
 
 
@@ -90,7 +104,7 @@ export type QueryUserArgs = {
 };
 
 export type UpdateForumInput = {
-  id: Scalars['Int']['input'];
+  id: Scalars['String']['input'];
   isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   userIds?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -107,12 +121,14 @@ export type User = {
   email: Scalars['String']['output'];
 };
 
+export type ForumFragmentFragment = { __typename?: 'Forum', _id: string, name?: string | null, userId: string, isPrivate: boolean, userIds: Array<string> };
+
 export type CreateForumMutationVariables = Exact<{
   createForumInput: CreateForumInput;
 }>;
 
 
-export type CreateForumMutation = { __typename?: 'Mutation', createForum: { __typename?: 'Forum', _id: string, userId: string, isPrivate: boolean, userIds: Array<string>, name?: string | null } };
+export type CreateForumMutation = { __typename?: 'Mutation', createForum: { __typename?: 'Forum', _id: string, name?: string | null, userId: string, isPrivate: boolean, userIds: Array<string> } };
 
 export type CreateUserMutationVariables = Exact<{
   createUserInput: CreateUserInput;
@@ -126,7 +142,13 @@ export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser: { __typename?: 'User', _id: string, email: string } };
 
+export type ForumsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const CreateForumDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createForum"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createForumInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateForumInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createForum"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createForumInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createForumInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"isPrivate"}},{"kind":"Field","name":{"kind":"Name","value":"userIds"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateForumMutation, CreateForumMutationVariables>;
+
+export type ForumsQuery = { __typename?: 'Query', forums: Array<{ __typename?: 'Forum', _id: string, name?: string | null, userId: string, isPrivate: boolean, userIds: Array<string> }> };
+
+export const ForumFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ForumFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Forum"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"isPrivate"}},{"kind":"Field","name":{"kind":"Name","value":"userIds"}}]}}]} as unknown as DocumentNode<ForumFragmentFragment, unknown>;
+export const CreateForumDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createForum"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createForumInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateForumInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createForum"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createForumInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createForumInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ForumFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ForumFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Forum"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"isPrivate"}},{"kind":"Field","name":{"kind":"Name","value":"userIds"}}]}}]} as unknown as DocumentNode<CreateForumMutation, CreateForumMutationVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+export const ForumsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"forums"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"forums"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ForumFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ForumFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Forum"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"isPrivate"}},{"kind":"Field","name":{"kind":"Name","value":"userIds"}}]}}]} as unknown as DocumentNode<ForumsQuery, ForumsQueryVariables>;

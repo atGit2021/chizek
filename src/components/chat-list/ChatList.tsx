@@ -4,9 +4,11 @@ import ChatListHeader from './chat-list-header/ChatListHeader';
 import { Divider, Stack } from '@mui/material';
 import { useState } from 'react';
 import ChatListAdd from './chat-list-modal/ChatListAdd';
+import { useGetForums } from '../../hooks/useGetForums';
 
 const ChatList = () => {
   const [chatListAddVisible, setChatListAddVisible] = useState(false);
+  const { data } = useGetForums();
 
   return (
     <>
@@ -26,7 +28,9 @@ const ChatList = () => {
             overflow: 'auto',
           }}
         >
-          <ChatListItem />
+          {data?.forums.map((forum) => (
+            <ChatListItem key={forum._id} forum={forum} />
+          ))}
         </List>
       </Stack>
     </>
