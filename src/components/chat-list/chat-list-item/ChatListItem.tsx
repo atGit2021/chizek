@@ -4,8 +4,13 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import { ForumFragmentFragment } from '../../../gql/graphql';
 
-const ChatListItem = () => {
+interface ChatListItemProps {
+  forum: ForumFragmentFragment;
+}
+
+const ChatListItem = ({ forum }: ChatListItemProps) => {
   return (
     <>
       <ListItem alignItems="flex-start">
@@ -13,7 +18,7 @@ const ChatListItem = () => {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary="Brunch this weekend?"
+          primary={forum.name}
           secondary={
             <>
               <Typography
@@ -21,7 +26,7 @@ const ChatListItem = () => {
                 variant="body2"
                 sx={{ color: 'text.primary', display: 'inline' }}
               >
-                Markus K
+                {forum.userId}
               </Typography>
               {" — I'll be in your neighborhood doing errands this…"}
             </>
