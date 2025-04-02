@@ -22,8 +22,9 @@ interface ChatListAddProps {
 }
 
 const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
-  const [isPrivate, setIsPrivate] = useState(true);
-  const [name, setName] = useState<string | undefined>();
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [error, setError] = useState('');
+  const [name, setName] = useState('');
   const [createForum, { loading }] = useCreateForum();
 
   const handleModalClick = (event: MouseEvent) => {
@@ -31,6 +32,10 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
   };
 
   const handleSave = async () => {
+    if (!isPrivate && !name.length) {
+      setError('Forum name is required.');
+      return;
+    }
     await createForum({
       variables: {
         createForumInput: {
@@ -39,13 +44,20 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
         },
       },
       onCompleted: () => {
-        handleClose();
+        onClose();
       },
     });
   };
 
+  const onClose = () => {
+    setError('');
+    setName('');
+    setIsPrivate(false);
+    handleClose();
+  };
+
   return (
-    <Modal open={open} onClick={handleClose}>
+    <Modal open={open} onClick={onClose}>
       <Box
         sx={{
           position: 'absolute',
@@ -86,6 +98,8 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
           ) : (
             <TextField
               label="Name"
+              error={!!error}
+              helperText={error}
               onChange={(event) => setName(event.target.value)}
             />
           )}
