@@ -26,7 +26,7 @@ const ChatListItem = ({ forum }: ChatListItemProps) => {
                 variant="body2"
                 sx={{ color: 'text.primary', display: 'inline' }}
               >
-                {forum.userId}
+                Markus
               </Typography>
               {" — I'll be in your neighborhood doing errands this…"}
             </>
