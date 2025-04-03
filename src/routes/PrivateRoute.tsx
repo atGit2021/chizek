@@ -1,23 +1,25 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useGetCurrentUser } from '../hooks/useGetCurrentUser';
-import excludedRoutes from '../constants/excluded-routes';
 import { snackVar } from '../constants/snack';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
 import { useEffect } from 'react';
+import { authenticatedVar } from '../constants/authenticated';
 
 const PrivateRoute = () => {
-  const isExcluded = excludedRoutes.includes(window.location.pathname);
-  const {
-    data: user,
-    error,
-    loading,
-  } = useGetCurrentUser({ skip: isExcluded });
+  const { data: user, error, loading } = useGetCurrentUser();
 
   useEffect(() => {
     if (error?.networkError) {
+      authenticatedVar(false);
       snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
     }
   }, [error]);
+
+  useEffect(() => {
+    if (!user && !loading) {
+      authenticatedVar(false);
+    }
+  }, [user, loading]);
 
   if (loading) return <p>Loading...</p>;
   return user ? <Outlet /> : <Navigate to="/login" replace />;

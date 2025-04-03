@@ -6,6 +6,8 @@ import PrivateRoute from './PrivateRoute';
 import NotFoundPage from '../pages/NotFoundPage';
 import Forum from '../pages/Forum';
 
+export const PUBLIC_ROUTES = ['/login', '/register'];
+
 const router = createBrowserRouter([
   {
     path: '/login',
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: 'forum',
         element: <Forum />,
+      },
+      {
+        path: 'games',
+        element: <HomePage />,
       },
     ],
   },
