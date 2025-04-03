@@ -14,7 +14,7 @@ import { Page } from '../../interfaces/page.interface';
 const pages: Page[] = [
   {
     title: 'Games',
-    path: '/',
+    path: '/games',
   },
   {
     title: 'Forum',

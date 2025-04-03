@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import excludedRoutes from '../excluded-routes';
 import { onLogout } from '../../utils/onLogout';
+import { PUBLIC_ROUTES } from '../../routes/Routes';
 
 interface OriginalError {
   statusCode: number;
@@ -11,7 +11,7 @@ const logoutLink = onError((error) => {
   const originalError = error.graphQLErrors?.[0].extensions?.originalError;
 
   if (isOriginalError(originalError) && originalError.statusCode === 401) {
-    if (!excludedRoutes.includes(window.location.pathname)) {
+    if (!PUBLIC_ROUTES.includes(window.location.pathname)) {
       onLogout();
     }
   }
