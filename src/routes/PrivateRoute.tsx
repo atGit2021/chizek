@@ -10,6 +10,7 @@ const PrivateRoute = () => {
 
   useEffect(() => {
     if (error?.networkError) {
+      sessionStorage.removeItem('authenticated');
       authenticatedVar(false);
       snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
     }
@@ -17,6 +18,7 @@ const PrivateRoute = () => {
 
   useEffect(() => {
     if (!user && !loading) {
+      sessionStorage.removeItem('authenticated');
       authenticatedVar(false);
     }
   }, [user, loading]);
