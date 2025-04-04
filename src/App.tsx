@@ -9,8 +9,8 @@ import router from './routes/Routes';
 import { ApolloProvider } from '@apollo/client';
 import client from './constants/api/apollo-client';
 import Header from './components/header/Header';
-import { authenticatedVar } from './constants/authenticated';
 import Snackbar from './components/snackbar/Snackbar';
+import { useGetCurrentUser } from './hooks/useGetCurrentUser';
 
 const darkTheme = createTheme({
   palette: {
@@ -18,25 +18,29 @@ const darkTheme = createTheme({
   },
 });
 
-const storedAuth = sessionStorage.getItem('authenticated');
+const AppContent = () => {
+  const { loading } = useGetCurrentUser();
 
-if (storedAuth === 'true') {
-  authenticatedVar(true);
-} else {
-  authenticatedVar(false);
-}
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Header />
+      <RouterProvider router={router}>
+        <Container></Container>
+      </RouterProvider>
+      <Snackbar />
+    </ThemeProvider>
+  );
+};
 
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <Header />
-        <RouterProvider router={router}>
-          <Container></Container>
-        </RouterProvider>
-        <Snackbar />
-      </ThemeProvider>
+      <AppContent />
     </ApolloProvider>
   );
 };

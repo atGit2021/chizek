@@ -1,5 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { graphql } from '../gql';
+import { useEffect } from 'react';
+import { authenticatedVar } from '../constants/authenticated';
 
 const getCurrentUserDocument = graphql(`
   query getCurrentUser {
@@ -15,7 +17,16 @@ interface UseGetCurrentUserProps {
 }
 
 const useGetCurrentUser = ({ skip = false }: UseGetCurrentUserProps = {}) => {
-  return useQuery(getCurrentUserDocument, { skip });
+  const result = useQuery(getCurrentUserDocument, { skip });
+
+  useEffect(() => {
+    if (result.data?.getCurrentUser) {
+      authenticatedVar(true);
+      sessionStorage.setItem('authenticated', 'true');
+    }
+  }, [result.data]);
+
+  return result;
 };
 
 export { useGetCurrentUser };
