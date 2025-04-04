@@ -16,15 +16,15 @@ const PrivateRoute = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    if (!user && !loading) {
-      sessionStorage.removeItem('authenticated');
-      authenticatedVar(false);
-    }
-  }, [user, loading]);
-
   if (loading) return <p>Loading...</p>;
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+
+  if (!user) {
+    sessionStorage.removeItem('authenticated');
+    authenticatedVar(false);
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default PrivateRoute;
