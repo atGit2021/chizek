@@ -2,7 +2,6 @@ import { Button, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser';
 import { useNavigate } from 'react-router-dom';
-import { authenticatedVar } from '../../constants/authenticated';
 
 interface AuthProps<T> {
   submitLabel: string;
@@ -25,8 +24,6 @@ const Auth = <T extends object>({
 
   useEffect(() => {
     if (user) {
-      authenticatedVar(true);
-      sessionStorage.setItem('authenticated', 'true');
       navigate('/');
     }
   }, [user, navigate]);
