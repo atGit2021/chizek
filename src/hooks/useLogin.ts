@@ -2,7 +2,7 @@ import { useState } from 'react';
 import client from '../constants/api/apollo-client';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
 import { snackVar } from '../constants/snack';
-import { authenticatedVar } from '../constants/authenticated';
+import { setAuthenticated } from '../utils/setAuthenticatedVar';
 
 interface LoginRequest {
   email: string;
@@ -23,7 +23,7 @@ const useLogin = () => {
       });
 
       if (!res.ok) {
-        authenticatedVar(false);
+        setAuthenticated(false);
         if (res.status === 401) {
           setError('Credentials are not valid.');
         } else {
@@ -33,12 +33,10 @@ const useLogin = () => {
       }
 
       setError('');
-      authenticatedVar(true);
-      sessionStorage.setItem('authenticated', 'true');
+      setAuthenticated(true);
       await client.refetchQueries({ include: 'active' });
     } catch {
-      authenticatedVar(false);
-      sessionStorage.removeItem('authenticated');
+      setAuthenticated(false);
       snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
     }
   };
