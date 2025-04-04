@@ -1,10 +1,9 @@
 import client from '../constants/api/apollo-client';
-import { authenticatedVar } from '../constants/authenticated';
 import router from '../routes/Routes';
+import { setAuthenticated } from './setAuthenticatedVar';
 
 export const onLogout = async () => {
-  sessionStorage.removeItem('authenticated');
-  authenticatedVar(false);
+  setAuthenticated(false);
   await client.clearStore();
   router.navigate('/login');
 };
