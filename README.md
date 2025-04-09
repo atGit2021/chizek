@@ -1,46 +1,143 @@
-# Getting Started with Create React App
+# Chizek UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based user interface for the Chizek application, built with modern web technologies and best practices.
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Apollo Client for GraphQL
+- Material-UI (MUI) v6
+- React Router DOM v7
+- GraphQL Code Generator
+- Jest & React Testing Library
+
+### Package Groups
+
+#### Core Framework
+
+- React and React DOM (v19)
+- React Router DOM (v7)
+- TypeScript
+
+#### UI Components
+
+- Material-UI (MUI v6)
+- Emotion (Styling)
+- Roboto Font
+
+#### GraphQL
+
+- Apollo Client
+- GraphQL Code Generator
+- GraphQL Core
+
+#### Testing
+
+- Jest
+- React Testing Library
+- Testing Library DOM
+- Testing Library User Event
+- Testing Library React Hooks
+
+#### Development Tools
+
+- ESLint
+- Prettier
+- TypeScript ESLint
+- Babel
+- Parcel Watcher
+- React Scripts (Create React App)
+
+#### Utilities
+
+- LocalForage (Offline Storage)
+- Match Sorter
+- Sort By
+- Web Vitals
+- Dotenv
+
+## Prerequisites
+
+- Node.js (LTS version recommended)
+- Yarn package manager
+- A running instance of the Chizek backend server
+
+## Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd chizek-ui
+```
+
+2. Install dependencies:
+
+```bash
+yarn install
+```
+
+3. Create a `.env` file in the root directory:
+
+```env
+REACT_APP_API_URL=
+GRAPHQL_SCHEMA_URL=
+```
+
+4. Start the development server:
+
+```bash
+yarn start
+```
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `yarn start` - Runs the app in development mode
+- `yarn test` - Launches the test runner in interactive watch mode
+- `yarn build` - Builds the app for production to the `build` folder
+- `yarn lint` - Runs ESLint to check for code issues
+- `yarn format` - Formats code using Prettier
+- `yarn codegen` - Generates TypeScript types from GraphQL schema
 
-### `yarn start`
+## Development
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### GraphQL Code Generation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This project uses GraphQL Code Generator to create TypeScript types from your GraphQL schema. To generate types:
 
-### `yarn test`
+1. Ensure your GraphQL backend is running
+2. Run:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+yarn codegen
+```
 
-### `yarn build`
+Generated files will be placed in `src/gql/`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Testing
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Tests are written using Jest and React Testing Library. To run tests:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+yarn test
+```
 
-### `yarn eject`
+To run tests with coverage:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+yarn test --coverage
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Code Style
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This project uses:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- ESLint for code linting
+- Prettier for code formatting
+- TypeScript for type checking
 
-## Learn More
+Configuration files:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `.prettierrc` - Prettier configuration
+- `tsconfig.json` - TypeScript configuration
