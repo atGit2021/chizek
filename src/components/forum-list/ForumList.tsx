@@ -1,23 +1,23 @@
 import List from '@mui/material/List';
-import ChatListItem from './chat-list-item/ChatListItem';
-import ChatListHeader from './chat-list-header/ChatListHeader';
 import { Divider, Stack } from '@mui/material';
 import { useState } from 'react';
-import ChatListAdd from './chat-list-modal/ChatListAdd';
 import { useGetForums } from '../../hooks/useGetForums';
+import ForumListItem from './forum-list-item/ForumListItem';
+import ForumListHeader from './forum-list-header/ForumListHeader';
+import ForumListAdd from './forum-list-modal/ForumListAdd';
 
-const ChatList = () => {
-  const [chatListAddVisible, setChatListAddVisible] = useState(false);
+const ForumList = () => {
+  const [forumListAddVisible, setForumListAddVisible] = useState(false);
   const { data } = useGetForums();
 
   return (
     <>
-      <ChatListAdd
-        open={chatListAddVisible}
-        handleClose={() => setChatListAddVisible(false)}
+      <ForumListAdd
+        open={forumListAddVisible}
+        handleClose={() => setForumListAddVisible(false)}
       />
       <Stack>
-        <ChatListHeader handleAddChat={() => setChatListAddVisible(true)} />
+        <ForumListHeader handleAddForum={() => setForumListAddVisible(true)} />
         <Divider />
         <List
           sx={{
@@ -29,7 +29,7 @@ const ChatList = () => {
           }}
         >
           {data?.forums.map((forum) => (
-            <ChatListItem key={forum._id} forum={forum} />
+            <ForumListItem key={forum._id} forum={forum} />
           ))}
         </List>
       </Stack>
@@ -37,4 +37,4 @@ const ChatList = () => {
   );
 };
 
-export default ChatList;
+export default ForumList;
