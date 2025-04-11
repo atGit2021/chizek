@@ -6,7 +6,7 @@ const HomePage = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      height="100vh"
+      height="100%"
     >
       <h1>Welcome to the Home Page</h1>
     </Box>
