@@ -4,7 +4,8 @@ import Register from '../pages/Register';
 import HomePage from '../pages/HomePage';
 import PrivateRoute from './PrivateRoute';
 import NotFoundPage from '../pages/NotFoundPage';
-import Forum from '../pages/Forum';
+import Forums from '../pages/Forums';
+import Forum from '../components/forum/Forum';
 
 export const PUBLIC_ROUTES = ['/login', '/register'];
 
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'forum',
+        path: 'forums',
+        element: <Forums />,
+      },
+      {
+        path: 'forum/:_id',
         element: <Forum />,
       },
       {

@@ -16,12 +16,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import { MouseEvent, useState } from 'react';
 import { useCreateForum } from '../../../hooks/useCreateForum';
 
-interface ChatListAddProps {
+interface ForumListAddProps {
   open: boolean;
   handleClose: () => void;
 }
 
-const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
+const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
   const [isPrivate, setIsPrivate] = useState(false);
   const [error, setError] = useState('');
   const [name, setName] = useState('');
@@ -74,7 +74,7 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
       >
         <Stack spacing={2}>
           <Typography variant="h6" component="h2">
-            Add Chat
+            Add Forum
           </Typography>
           <FormGroup>
             <FormControlLabel
@@ -112,4 +112,4 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
   );
 };
 
-export default ChatListAdd;
+export default ForumListAdd;
