@@ -46,7 +46,7 @@ const Auth = <T extends object>({
     <Stack
       spacing={3}
       sx={{
-        height: '100vh',
+        height: '100%',
         maxWidth: {
           xs: '70%',
           md: '30%',

@@ -9,8 +9,8 @@ const Forums = () => {
         <ForumList />
       </Grid>
       <Grid size={{ md: 9 }}>
-        <Box display="flex" height="100vh">
-          <h1>Welcome to the Forum</h1>
+        <Box display="flex">
+          <h1>Forum News</h1>
         </Box>
       </Grid>
     </Grid>

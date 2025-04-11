@@ -1,4 +1,5 @@
 import {
+  Box,
   Container,
   createTheme,
   CssBaseline,
@@ -28,11 +29,15 @@ const AppContent = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Header />
-      <RouterProvider router={router}>
-        <Container></Container>
-      </RouterProvider>
-      <Snackbar />
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <Header />
+        <Box sx={{ flex: 1, overflow: 'auto' }}>
+          <Container maxWidth="lg" sx={{ height: '100%' }}>
+            <RouterProvider router={router} />
+          </Container>
+        </Box>
+        <Snackbar />
+      </Box>
     </ThemeProvider>
   );
 };
