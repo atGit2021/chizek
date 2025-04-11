@@ -17,8 +17,8 @@ const pages: Page[] = [
     path: '/games',
   },
   {
-    title: 'Forum',
-    path: '/forum',
+    title: 'Forums',
+    path: '/forums',
   },
 ];
 

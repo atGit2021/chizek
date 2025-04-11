@@ -35,11 +35,18 @@ const Auth = <T extends object>({
     }));
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      onSubmit(fields);
+    }
+  };
+
   return (
     <Stack
       spacing={3}
       sx={{
-        height: '100vh',
+        height: '100%',
         maxWidth: {
           xs: '70%',
           md: '30%',
@@ -47,6 +54,8 @@ const Auth = <T extends object>({
         margin: '0 auto',
         justifyContent: 'center',
       }}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
     >
       {Object.entries(fields).map(([key, value]) => (
         <TextField
