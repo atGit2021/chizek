@@ -4,10 +4,15 @@ import { Divider, IconButton, InputBase, Paper, Stack } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import ForumList from '../forum-list/ForumList';
 import SendIcon from '@mui/icons-material/Send';
+import { useCreateMessage } from '../../hooks/useCreateMessage';
+import { useState } from 'react';
 
 const Forum = () => {
   const params = useParams();
-  const { data } = useGetForum({ _id: params._id! });
+  const forumId = params._id!;
+  const { data } = useGetForum({ _id: forumId });
+  const [message, setMessage] = useState('');
+  const [createMessage] = useCreateMessage();
 
   return (
     <Grid container spacing={2} sx={{ height: '100%' }}>
@@ -25,9 +30,24 @@ const Forum = () => {
               width: '100%',
             }}
           >
-            <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Message" />
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              onChange={(event) => setMessage(event.target.value)}
+              value={message}
+              placeholder="Message"
+            />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton color="primary" sx={{ p: '10px' }}>
+            <IconButton
+              onClick={() => {
+                createMessage({
+                  variables: {
+                    createMessageInput: { content: message, forumId },
+                  },
+                });
+              }}
+              color="primary"
+              sx={{ p: '10px' }}
+            >
               <SendIcon />
             </IconButton>
           </Paper>

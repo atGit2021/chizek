@@ -27,12 +27,19 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: { input: any; output: any };
 };
 
 export type CreateForumInput = {
   isPrivate: Scalars['Boolean']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
   userIds?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type CreateMessageInput = {
+  content: Scalars['String']['input'];
+  forumId: Scalars['String']['input'];
 };
 
 export type CreateUserInput = {
@@ -56,9 +63,18 @@ export type ForumFilterInput = {
   userIds?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
+export type Message = {
+  __typename?: 'Message';
+  _id: Scalars['ID']['output'];
+  content: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  ownerId: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createForum: Forum;
+  createMessage: Message;
   createUser: User;
   removeForum: Forum;
   removeUser: User;
@@ -68,6 +84,10 @@ export type Mutation = {
 
 export type MutationCreateForumArgs = {
   createForumInput: CreateForumInput;
+};
+
+export type MutationCreateMessageArgs = {
+  createMessageInput: CreateMessageInput;
 };
 
 export type MutationCreateUserArgs = {
@@ -148,6 +168,20 @@ export type CreateForumMutation = {
     userId: string;
     isPrivate: boolean;
     userIds: Array<string>;
+  };
+};
+
+export type CreateMessageMutationVariables = Exact<{
+  createMessageInput: CreateMessageInput;
+}>;
+
+export type CreateMessageMutation = {
+  __typename?: 'Mutation';
+  createMessage: {
+    __typename?: 'Message';
+    _id: string;
+    content: string;
+    createdAt: any;
   };
 };
 
@@ -292,6 +326,62 @@ export const CreateForumDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateForumMutation, CreateForumMutationVariables>;
+export const CreateMessageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateMessage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'createMessageInput' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateMessageInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createMessage' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'createMessageInput' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'createMessageInput' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateMessageMutation,
+  CreateMessageMutationVariables
+>;
 export const CreateUserDocument = {
   kind: 'Document',
   definitions: [
