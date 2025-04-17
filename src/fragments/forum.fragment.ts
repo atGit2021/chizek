@@ -7,5 +7,11 @@ export const ForumFragment = graphql(`
     userId
     isPrivate
     userIds
+    messages {
+      _id
+      content
+      createdAt
+      ownerId
+    }
   }
 `);
