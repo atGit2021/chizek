@@ -1,11 +1,19 @@
 import { useParams } from 'react-router-dom';
 import { useGetForum } from '../../hooks/useGetForum';
-import { Divider, IconButton, InputBase, Paper, Stack } from '@mui/material';
+import {
+  Box,
+  Divider,
+  IconButton,
+  InputBase,
+  Paper,
+  Stack,
+} from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import ForumList from '../forum-list/ForumList';
 import SendIcon from '@mui/icons-material/Send';
 import { useCreateMessage } from '../../hooks/useCreateMessage';
 import { useState } from 'react';
+import { useGetMessages } from '../../hooks/useGetMessage';
 
 const Forum = () => {
   const params = useParams();
@@ -13,6 +21,7 @@ const Forum = () => {
   const { data } = useGetForum({ _id: forumId });
   const [message, setMessage] = useState('');
   const [createMessage] = useCreateMessage();
+  const { data: messages } = useGetMessages({ forumId });
 
   return (
     <Grid container spacing={2} sx={{ height: '100%' }}>
@@ -22,6 +31,11 @@ const Forum = () => {
       <Grid size={{ md: 9 }}>
         <Stack sx={{ height: '100%', justifyContent: 'space-between' }}>
           <h1>{data?.forum.name}</h1>
+          <Box>
+            {messages?.messages.map((message) => (
+              <p key={message._id}>{message.content}</p>
+            ))}
+          </Box>
           <Paper
             sx={{
               p: 0.5,

@@ -1804,7 +1804,7 @@
     "@graphql-tools/utils" "^10.8.6"
     tslib "^2.4.0"
 
-"@graphql-tools/import@7.0.18":
+"@graphql-tools/import@7.0.18", "@graphql-tools/import@^7.0.18":
   version "7.0.18"
   resolved "https://registry.yarnpkg.com/@graphql-tools/import/-/import-7.0.18.tgz#08c8eb14b16d69b4e392d6d1b43485663d4477d8"
   integrity sha512-1tw1/1QLB0n5bPWfIrhCRnrHIlbMvbwuifDc98g4FPhJ7OXD+iUQe+IpmD5KHVwYWXWhZOuJuq45DfV/WLNq3A==

@@ -1,0 +1,7 @@
+# import MessageFragment from '../fragments/message.fragment.graphql'
+
+query Messages($forumId: String!) {
+  messages(forumId: $forumId) {
+    ...MessageFragment
+  }
+}

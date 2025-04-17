@@ -1,0 +1,5 @@
+fragment MessageFragment on Message {
+  _id
+  content
+  createdAt
+}
