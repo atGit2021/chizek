@@ -7,6 +7,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.1.1",
+    "@graphql-tools/import": "^7.0.18",
     "@mui/icons-material": "^6.3.1",
     "@mui/material": "^6.3.1",
     "@types/node": "^22.13.10",
@@ -28,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint",
+    "lint": "eslint 'src/**/*.{js,ts,jsx,tsx}' --config eslint.config.mjs",
     "format": "prettier --write .",
     "codegen": "graphql-codegen --config codegen.ts"
   },
