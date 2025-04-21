@@ -20,7 +20,7 @@ const Forum = () => {
   const forumId = params._id!;
   const { data } = useGetForum({ _id: forumId });
   const [message, setMessage] = useState('');
-  const [createMessage] = useCreateMessage();
+  const [createMessage] = useCreateMessage(forumId);
   const { data: messages } = useGetMessages({ forumId });
 
   return (
