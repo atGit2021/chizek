@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import { graphql } from '../gql';
 import { snackVar } from '../constants/snack';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
-import { MessageFragmentFragmentDoc } from '../gql/graphql';
+import { MessagesDocument } from '../gql/graphql';
 
 const createMessageDocument = graphql(`
   mutation CreateMessage($createMessageInput: CreateMessageInput!) {
@@ -12,18 +12,23 @@ const createMessageDocument = graphql(`
   }
 `);
 
-const useCreateMessage = () => {
+const useCreateMessage = (forumId: string) => {
   return useMutation(createMessageDocument, {
     update: (cache, { data }) => {
-      cache.modify({
-        fields: {
-          messages(existingMessages = []) {
-            const newMessageRef = cache.writeFragment({
-              data: data?.createMessage,
-              fragment: MessageFragmentFragmentDoc,
-            });
-            return [...existingMessages, newMessageRef];
-          },
+      const messagesQueryOptions = {
+        query: MessagesDocument,
+        variables: {
+          forumId,
+        },
+      };
+      const messages = cache.readQuery({ ...messagesQueryOptions });
+      if (!messages || !data?.createMessage) {
+        return;
+      }
+      cache.writeQuery({
+        ...messagesQueryOptions,
+        data: {
+          messages: messages.messages.concat(data?.createMessage),
         },
       });
     },
