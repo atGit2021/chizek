@@ -28,9 +28,9 @@ const ForumList = () => {
             overflow: 'auto',
           }}
         >
-          {data?.forums.map((forum) => (
-            <ForumListItem key={forum._id} forum={forum} />
-          ))}
+          {data?.forums
+            .map((forum) => <ForumListItem key={forum._id} forum={forum} />)
+            .reverse()}
         </List>
       </Stack>
     </>
