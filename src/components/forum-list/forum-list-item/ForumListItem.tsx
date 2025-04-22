@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { ForumFragmentFragment } from '../../../gql/graphql';
 import ListItemButton from '@mui/material/ListItemButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ForumListItemProps {
   forum: ForumFragmentFragment;
@@ -14,11 +14,16 @@ interface ForumListItemProps {
 
 const ForumListItem = ({ forum }: ForumListItemProps) => {
   const navigate = useNavigate();
+  const pathId = useLocation().pathname.split('/forum/')[1];
+  const isSelected = forum._id === pathId;
 
   return (
     <>
       <ListItem alignItems="flex-start" disablePadding>
-        <ListItemButton onClick={() => navigate(`/forum/${forum._id}`)}>
+        <ListItemButton
+          onClick={() => navigate(`/forum/${forum._id}`)}
+          selected={isSelected}
+        >
           <ListItemAvatar>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </ListItemAvatar>
