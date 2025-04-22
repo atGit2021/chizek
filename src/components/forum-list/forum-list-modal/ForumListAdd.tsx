@@ -15,6 +15,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { MouseEvent, useState } from 'react';
 import { useCreateForum } from '../../../hooks/useCreateForum';
+import { useNavigate } from 'react-router-dom';
 
 interface ForumListAddProps {
   open: boolean;
@@ -26,6 +27,7 @@ const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
   const [error, setError] = useState('');
   const [name, setName] = useState('');
   const [createForum, { loading }] = useCreateForum();
+  const navigate = useNavigate();
 
   const handleModalClick = (event: MouseEvent) => {
     event.stopPropagation();
@@ -36,17 +38,17 @@ const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
       setError('Forum name is required.');
       return;
     }
-    await createForum({
+    const result = await createForum({
       variables: {
         createForumInput: {
           isPrivate,
           name: name || undefined,
         },
       },
-      onCompleted: () => {
-        onClose();
-      },
     });
+
+    onClose();
+    navigate(`/forum/${result.data?.createForum._id}`);
   };
 
   const onClose = () => {

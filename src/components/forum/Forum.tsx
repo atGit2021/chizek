@@ -23,6 +23,15 @@ const Forum = () => {
   const [createMessage] = useCreateMessage(forumId);
   const { data: messages } = useGetMessages({ forumId });
 
+  const handleCreateMessage = async () => {
+    await createMessage({
+      variables: {
+        createMessageInput: { content: message, forumId },
+      },
+    });
+    setMessage('');
+  };
+
   return (
     <Grid container spacing={2} sx={{ height: '100%' }}>
       <Grid size={{ md: 3 }}>
@@ -49,16 +58,15 @@ const Forum = () => {
               onChange={(event) => setMessage(event.target.value)}
               value={message}
               placeholder="Message"
+              onKeyDown={async (event) => {
+                if (event.key === 'Enter') {
+                  await handleCreateMessage();
+                }
+              }}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             <IconButton
-              onClick={() => {
-                createMessage({
-                  variables: {
-                    createMessageInput: { content: message, forumId },
-                  },
-                });
-              }}
+              onClick={handleCreateMessage}
               color="primary"
               sx={{ p: '10px' }}
             >
