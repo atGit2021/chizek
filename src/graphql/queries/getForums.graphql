@@ -1,0 +1,7 @@
+# import ForumFragment from '../fragments/forum.fragment.graphql'
+
+query Forums {
+  forums {
+    ...ForumFragment
+  }
+}
