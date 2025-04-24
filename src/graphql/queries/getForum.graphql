@@ -1,0 +1,7 @@
+# import ForumFragment from '../fragments/forum.fragment.graphql'
+
+query Forum($_id: String!) {
+  forum(_id: $_id) {
+    ...ForumFragment
+  }
+}
