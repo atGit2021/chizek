@@ -183,6 +183,13 @@ export type CreateForumMutation = {
   };
 };
 
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCurrentUserQuery = {
+  __typename?: 'Query';
+  getCurrentUser: { __typename?: 'User'; _id: string; email: string };
+};
+
 export type ForumQueryVariables = Exact<{
   _id: Scalars['String']['input'];
 }>;
@@ -248,13 +255,6 @@ export type CreateUserMutationVariables = Exact<{
 export type CreateUserMutation = {
   __typename?: 'Mutation';
   createUser: { __typename?: 'User'; _id: string; email: string };
-};
-
-export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCurrentUserQuery = {
-  __typename?: 'Query';
-  getCurrentUser: { __typename?: 'User'; _id: string; email: string };
 };
 
 export const ForumFragmentFragmentDoc = {
@@ -373,6 +373,32 @@ export const CreateForumDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateForumMutation, CreateForumMutationVariables>;
+export const GetCurrentUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetCurrentUser' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getCurrentUser' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
 export const ForumDocument = {
   kind: 'Document',
   definitions: [
@@ -683,29 +709,3 @@ export const CreateUserDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
-export const GetCurrentUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getCurrentUser' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'getCurrentUser' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
