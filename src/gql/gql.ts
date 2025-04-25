@@ -17,6 +17,7 @@ type Documents = {
   'fragment ForumFragment on Forum {\n  _id\n  name\n  userId\n  isPrivate\n  userIds\n}': typeof types.ForumFragmentFragmentDoc;
   'fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n}': typeof types.MessageFragmentFragmentDoc;
   'mutation CreateForum($createForumInput: CreateForumInput!) {\n  createForum(createForumInput: $createForumInput) {\n    ...ForumFragment\n  }\n}': typeof types.CreateForumDocument;
+  'mutation CreateMessage($createMessageInput: CreateMessageInput!) {\n  createMessage(createMessageInput: $createMessageInput) {\n    ...MessageFragment\n  }\n}': typeof types.CreateMessageDocument;
   'query GetCurrentUser {\n  getCurrentUser {\n    _id\n    email\n  }\n}': typeof types.GetCurrentUserDocument;
   'query Forum($_id: String!) {\n  forum(_id: $_id) {\n    ...ForumFragment\n  }\n}': typeof types.ForumDocument;
   'query Forums {\n  forums {\n    ...ForumFragment\n  }\n}': typeof types.ForumsDocument;
@@ -31,6 +32,8 @@ const documents: Documents = {
     types.MessageFragmentFragmentDoc,
   'mutation CreateForum($createForumInput: CreateForumInput!) {\n  createForum(createForumInput: $createForumInput) {\n    ...ForumFragment\n  }\n}':
     types.CreateForumDocument,
+  'mutation CreateMessage($createMessageInput: CreateMessageInput!) {\n  createMessage(createMessageInput: $createMessageInput) {\n    ...MessageFragment\n  }\n}':
+    types.CreateMessageDocument,
   'query GetCurrentUser {\n  getCurrentUser {\n    _id\n    email\n  }\n}':
     types.GetCurrentUserDocument,
   'query Forum($_id: String!) {\n  forum(_id: $_id) {\n    ...ForumFragment\n  }\n}':
@@ -77,6 +80,12 @@ export function graphql(
 export function graphql(
   source: 'mutation CreateForum($createForumInput: CreateForumInput!) {\n  createForum(createForumInput: $createForumInput) {\n    ...ForumFragment\n  }\n}',
 ): (typeof documents)['mutation CreateForum($createForumInput: CreateForumInput!) {\n  createForum(createForumInput: $createForumInput) {\n    ...ForumFragment\n  }\n}'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CreateMessage($createMessageInput: CreateMessageInput!) {\n  createMessage(createMessageInput: $createMessageInput) {\n    ...MessageFragment\n  }\n}',
+): (typeof documents)['mutation CreateMessage($createMessageInput: CreateMessageInput!) {\n  createMessage(createMessageInput: $createMessageInput) {\n    ...MessageFragment\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

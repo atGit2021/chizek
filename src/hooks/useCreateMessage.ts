@@ -1,19 +1,10 @@
 import { useMutation } from '@apollo/client';
-import { graphql } from '../gql';
 import { snackVar } from '../constants/snack';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
-import { MessagesDocument } from '../gql/graphql';
-
-const createMessageDocument = graphql(`
-  mutation CreateMessage($createMessageInput: CreateMessageInput!) {
-    createMessage(createMessageInput: $createMessageInput) {
-      ...MessageFragment
-    }
-  }
-`);
+import { CreateMessageDocument, MessagesDocument } from '../gql/graphql';
 
 const useCreateMessage = (forumId: string) => {
-  return useMutation(createMessageDocument, {
+  return useMutation(CreateMessageDocument, {
     update: (cache, { data }) => {
       const messagesQueryOptions = {
         query: MessagesDocument,
