@@ -197,6 +197,15 @@ export type CreateMessageMutation = {
   };
 };
 
+export type CreateUserMutationVariables = Exact<{
+  createUserInput: CreateUserInput;
+}>;
+
+export type CreateUserMutation = {
+  __typename?: 'Mutation';
+  createUser: { __typename?: 'User'; _id: string; email: string };
+};
+
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCurrentUserQuery = {
@@ -246,15 +255,6 @@ export type MessagesQuery = {
     content: string;
     createdAt: any;
   }>;
-};
-
-export type CreateUserMutationVariables = Exact<{
-  createUserInput: CreateUserInput;
-}>;
-
-export type CreateUserMutation = {
-  __typename?: 'Mutation';
-  createUser: { __typename?: 'User'; _id: string; email: string };
 };
 
 export const ForumFragmentFragmentDoc = {
@@ -446,6 +446,58 @@ export const CreateMessageDocument = {
   CreateMessageMutation,
   CreateMessageMutationVariables
 >;
+export const CreateUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'createUserInput' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateUserInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'createUserInput' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'createUserInput' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const GetCurrentUserDocument = {
   kind: 'Document',
   definitions: [
@@ -657,55 +709,3 @@ export const MessagesDocument = {
     },
   ],
 } as unknown as DocumentNode<MessagesQuery, MessagesQueryVariables>;
-export const CreateUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'CreateUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'createUserInput' },
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'CreateUserInput' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'createUserInput' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'createUserInput' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
