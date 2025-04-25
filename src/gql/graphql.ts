@@ -183,6 +183,20 @@ export type CreateForumMutation = {
   };
 };
 
+export type CreateMessageMutationVariables = Exact<{
+  createMessageInput: CreateMessageInput;
+}>;
+
+export type CreateMessageMutation = {
+  __typename?: 'Mutation';
+  createMessage: {
+    __typename?: 'Message';
+    _id: string;
+    content: string;
+    createdAt: any;
+  };
+};
+
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCurrentUserQuery = {
@@ -232,20 +246,6 @@ export type MessagesQuery = {
     content: string;
     createdAt: any;
   }>;
-};
-
-export type CreateMessageMutationVariables = Exact<{
-  createMessageInput: CreateMessageInput;
-}>;
-
-export type CreateMessageMutation = {
-  __typename?: 'Mutation';
-  createMessage: {
-    __typename?: 'Message';
-    _id: string;
-    content: string;
-    createdAt: any;
-  };
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -373,6 +373,79 @@ export const CreateForumDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateForumMutation, CreateForumMutationVariables>;
+export const CreateMessageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateMessage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'createMessageInput' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateMessageInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createMessage' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'createMessageInput' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'createMessageInput' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MessageFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MessageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Message' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateMessageMutation,
+  CreateMessageMutationVariables
+>;
 export const GetCurrentUserDocument = {
   kind: 'Document',
   definitions: [
@@ -584,79 +657,6 @@ export const MessagesDocument = {
     },
   ],
 } as unknown as DocumentNode<MessagesQuery, MessagesQueryVariables>;
-export const CreateMessageDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'CreateMessage' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'createMessageInput' },
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'CreateMessageInput' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createMessage' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'createMessageInput' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'createMessageInput' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'MessageFragment' },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'MessageFragment' },
-      typeCondition: {
-        kind: 'NamedType',
-        name: { kind: 'Name', value: 'Message' },
-      },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  CreateMessageMutation,
-  CreateMessageMutationVariables
->;
 export const CreateUserDocument = {
   kind: 'Document',
   definitions: [
