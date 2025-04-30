@@ -16,6 +16,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useCreateMessage } from '../../hooks/useCreateMessage';
 import { useEffect, useRef, useState } from 'react';
 import { useGetMessages } from '../../hooks/useGetMessage';
+import { useMessageCreated } from '../../hooks/useMessageCreated';
 
 const Forum = () => {
   const params = useParams();
@@ -25,6 +26,8 @@ const Forum = () => {
   const [createMessage] = useCreateMessage(forumId);
   const { data: messages } = useGetMessages({ forumId });
   const divRef = useRef<HTMLDivElement | null>(null);
+  const { data: latestMessage } = useMessageCreated({ forumId });
+  console.log(latestMessage);
 
   const scrollToBottom = () =>
     divRef.current?.scrollIntoView({ behavior: 'smooth' });
