@@ -68,6 +68,7 @@ export type Message = {
   _id: Scalars['ID']['output'];
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
+  forumId: Scalars['String']['output'];
   ownerId: Scalars['String']['output'];
 };
 
@@ -133,6 +134,15 @@ export type QueryUserArgs = {
   _id: Scalars['String']['input'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  messageCreated: Message;
+};
+
+export type SubscriptionMessageCreatedArgs = {
+  forumId: Scalars['String']['input'];
+};
+
 export type UpdateForumInput = {
   id: Scalars['String']['input'];
   isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
@@ -165,6 +175,8 @@ export type MessageFragmentFragment = {
   _id: string;
   content: string;
   createdAt: any;
+  ownerId: string;
+  forumId: string;
 };
 
 export type CreateForumMutationVariables = Exact<{
@@ -194,6 +206,8 @@ export type CreateMessageMutation = {
     _id: string;
     content: string;
     createdAt: any;
+    ownerId: string;
+    forumId: string;
   };
 };
 
@@ -254,7 +268,25 @@ export type MessagesQuery = {
     _id: string;
     content: string;
     createdAt: any;
+    ownerId: string;
+    forumId: string;
   }>;
+};
+
+export type MessageCreatedSubscriptionVariables = Exact<{
+  forumId: Scalars['String']['input'];
+}>;
+
+export type MessageCreatedSubscription = {
+  __typename?: 'Subscription';
+  messageCreated: {
+    __typename?: 'Message';
+    _id: string;
+    content: string;
+    createdAt: any;
+    ownerId: string;
+    forumId: string;
+  };
 };
 
 export const ForumFragmentFragmentDoc = {
@@ -296,6 +328,8 @@ export const MessageFragmentFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
         ],
       },
     },
@@ -438,6 +472,8 @@ export const CreateMessageDocument = {
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
         ],
       },
     },
@@ -704,8 +740,85 @@ export const MessagesDocument = {
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
         ],
       },
     },
   ],
 } as unknown as DocumentNode<MessagesQuery, MessagesQueryVariables>;
+export const MessageCreatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'subscription',
+      name: { kind: 'Name', value: 'MessageCreated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'forumId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'messageCreated' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'forumId' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'forumId' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MessageFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MessageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Message' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  MessageCreatedSubscription,
+  MessageCreatedSubscriptionVariables
+>;

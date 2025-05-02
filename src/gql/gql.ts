@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
   'fragment ForumFragment on Forum {\n  _id\n  name\n  userId\n  isPrivate\n  userIds\n}': typeof types.ForumFragmentFragmentDoc;
-  'fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n}': typeof types.MessageFragmentFragmentDoc;
+  'fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n  ownerId\n  forumId\n}': typeof types.MessageFragmentFragmentDoc;
   'mutation CreateForum($createForumInput: CreateForumInput!) {\n  createForum(createForumInput: $createForumInput) {\n    ...ForumFragment\n  }\n}': typeof types.CreateForumDocument;
   'mutation CreateMessage($createMessageInput: CreateMessageInput!) {\n  createMessage(createMessageInput: $createMessageInput) {\n    ...MessageFragment\n  }\n}': typeof types.CreateMessageDocument;
   'mutation CreateUser($createUserInput: CreateUserInput!) {\n  createUser(createUserInput: $createUserInput) {\n    _id\n    email\n  }\n}': typeof types.CreateUserDocument;
@@ -23,11 +23,12 @@ type Documents = {
   'query Forum($_id: String!) {\n  forum(_id: $_id) {\n    ...ForumFragment\n  }\n}': typeof types.ForumDocument;
   'query Forums {\n  forums {\n    ...ForumFragment\n  }\n}': typeof types.ForumsDocument;
   'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}': typeof types.MessagesDocument;
+  'subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}': typeof types.MessageCreatedDocument;
 };
 const documents: Documents = {
   'fragment ForumFragment on Forum {\n  _id\n  name\n  userId\n  isPrivate\n  userIds\n}':
     types.ForumFragmentFragmentDoc,
-  'fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n}':
+  'fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n  ownerId\n  forumId\n}':
     types.MessageFragmentFragmentDoc,
   'mutation CreateForum($createForumInput: CreateForumInput!) {\n  createForum(createForumInput: $createForumInput) {\n    ...ForumFragment\n  }\n}':
     types.CreateForumDocument,
@@ -43,6 +44,8 @@ const documents: Documents = {
     types.ForumsDocument,
   'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}':
     types.MessagesDocument,
+  'subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}':
+    types.MessageCreatedDocument,
 };
 
 /**
@@ -69,8 +72,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n}',
-): (typeof documents)['fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n}'];
+  source: 'fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n  ownerId\n  forumId\n}',
+): (typeof documents)['fragment MessageFragment on Message {\n  _id\n  content\n  createdAt\n  ownerId\n  forumId\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -113,6 +116,12 @@ export function graphql(
 export function graphql(
   source: 'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}',
 ): (typeof documents)['query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}',
+): (typeof documents)['subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
