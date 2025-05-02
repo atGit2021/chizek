@@ -1,27 +1,15 @@
 import { useMutation } from '@apollo/client';
 import { snackVar } from '../constants/snack';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
-import { CreateMessageDocument, MessagesDocument } from '../gql/graphql';
+import { CreateMessageDocument } from '../gql/graphql';
+import { updateMessages } from '../cache/messages';
 
-const useCreateMessage = (forumId: string) => {
+const useCreateMessage = () => {
   return useMutation(CreateMessageDocument, {
     update: (cache, { data }) => {
-      const messagesQueryOptions = {
-        query: MessagesDocument,
-        variables: {
-          forumId,
-        },
-      };
-      const messages = cache.readQuery({ ...messagesQueryOptions });
-      if (!messages || !data?.createMessage) {
-        return;
+      if (data?.createMessage) {
+        updateMessages(cache, data.createMessage);
       }
-      cache.writeQuery({
-        ...messagesQueryOptions,
-        data: {
-          messages: messages.messages.concat(data?.createMessage),
-        },
-      });
     },
     onError: (error) => {
       if (error.networkError) {
