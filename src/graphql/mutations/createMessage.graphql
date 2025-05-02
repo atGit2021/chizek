@@ -1,0 +1,7 @@
+# import MessageFragment from '../fragments/message.fragment.graphql'
+
+mutation CreateMessage($createMessageInput: CreateMessageInput!) {
+  createMessage(createMessageInput: $createMessageInput) {
+    ...MessageFragment
+  }
+}

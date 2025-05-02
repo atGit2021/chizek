@@ -1,0 +1,7 @@
+# import ForumFragment from '../fragments/forum.fragment.graphql'
+
+mutation CreateForum($createForumInput: CreateForumInput!) {
+  createForum(createForumInput: $createForumInput) {
+    ...ForumFragment
+  }
+}

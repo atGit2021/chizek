@@ -1,19 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { graphql } from '../gql';
 import { useEffect } from 'react';
 import { setAuthenticated } from '../utils/setAuthenticatedVar';
-
-const getCurrentUserDocument = graphql(`
-  query getCurrentUser {
-    getCurrentUser {
-      _id
-      email
-    }
-  }
-`);
+import { GetCurrentUserDocument } from '../gql/graphql';
 
 const useGetCurrentUser = () => {
-  const result = useQuery(getCurrentUserDocument);
+  const result = useQuery(GetCurrentUserDocument);
 
   useEffect(() => {
     if (result.data?.getCurrentUser) {

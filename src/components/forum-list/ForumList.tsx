@@ -22,15 +22,14 @@ const ForumList = () => {
         <List
           sx={{
             width: '100%',
-            maxWidth: 360,
             bgcolor: 'background.paper',
             maxHeight: '80vh',
             overflow: 'auto',
           }}
         >
-          {data?.forums.map((forum) => (
-            <ForumListItem key={forum._id} forum={forum} />
-          ))}
+          {data?.forums
+            .map((forum) => <ForumListItem key={forum._id} forum={forum} />)
+            .reverse()}
         </List>
       </Stack>
     </>

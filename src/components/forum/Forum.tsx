@@ -1,73 +1,164 @@
 import { useParams } from 'react-router-dom';
 import { useGetForum } from '../../hooks/useGetForum';
 import {
+  Avatar,
   Box,
   Divider,
   IconButton,
   InputBase,
   Paper,
   Stack,
+  Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import ForumList from '../forum-list/ForumList';
 import SendIcon from '@mui/icons-material/Send';
 import { useCreateMessage } from '../../hooks/useCreateMessage';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGetMessages } from '../../hooks/useGetMessage';
+import { useMessageCreated } from '../../hooks/useMessageCreated';
+import { Message } from '../../gql/graphql';
 
 const Forum = () => {
   const params = useParams();
   const forumId = params._id!;
   const { data } = useGetForum({ _id: forumId });
   const [message, setMessage] = useState('');
-  const [createMessage] = useCreateMessage();
-  const { data: messages } = useGetMessages({ forumId });
+  const [createMessage] = useCreateMessage(forumId);
+  const { data: existingMessages } = useGetMessages({ forumId });
+  const divRef = useRef<HTMLDivElement | null>(null);
+  const { data: publishedMessage } = useMessageCreated({ forumId });
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  const scrollToBottom = () =>
+    divRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+  useEffect(() => {
+    if (existingMessages) {
+      setMessages(existingMessages.messages);
+    }
+  }, [existingMessages]);
+
+  useEffect(() => {
+    const lastExistingMessage = messages[messages.length - 1]?._id;
+    if (
+      publishedMessage?.messageCreated &&
+      publishedMessage.messageCreated._id !== lastExistingMessage
+    ) {
+      setMessages([...messages, publishedMessage.messageCreated]);
+    }
+  }, [publishedMessage, messages]);
+
+  useEffect(() => {
+    setMessage('');
+    scrollToBottom();
+  }, [forumId, messages]);
+
+  const handleCreateMessage = async () => {
+    await createMessage({
+      variables: {
+        createMessageInput: { content: message, forumId },
+      },
+    });
+    setMessage('');
+    scrollToBottom();
+  };
 
   return (
-    <Grid container spacing={2} sx={{ height: '100%' }}>
-      <Grid size={{ md: 3 }}>
-        <ForumList />
-      </Grid>
-      <Grid size={{ md: 9 }}>
-        <Stack sx={{ height: '100%', justifyContent: 'space-between' }}>
-          <h1>{data?.forum.name}</h1>
-          <Box>
-            {messages?.messages.map((message) => (
-              <p key={message._id}>{message.content}</p>
-            ))}
-          </Box>
-          <Paper
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Grid container spacing={2} sx={{ flex: 1 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <ForumList />
+        </Grid>
+        <Grid size={{ xs: 12, md: 9 }}>
+          <Stack
             sx={{
-              p: 0.5,
               display: 'flex',
-              alignItems: 'center',
-              width: '100%',
+              flexDirection: 'column',
+              height: '100%',
+              paddingX: { xs: 1, md: 2 },
             }}
           >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              onChange={(event) => setMessage(event.target.value)}
-              value={message}
-              placeholder="Message"
-            />
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton
-              onClick={() => {
-                createMessage({
-                  variables: {
-                    createMessageInput: { content: message, forumId },
-                  },
-                });
+            <Box sx={{ flex: 1, overflowY: 'auto', padding: 2 }}>
+              <Typography variant="h4" sx={{ marginBottom: 2 }}>
+                {data?.forum.name}
+              </Typography>
+              <Box
+                sx={{
+                  maxHeight: 'calc(100vh - 200 px)',
+                  overflowY: 'auto',
+                }}
+              >
+                {[...messages]
+                  .sort(
+                    (messageA, messageB) =>
+                      new Date(messageA.createdAt).getTime() -
+                      new Date(messageB.createdAt).getTime(),
+                  )
+                  .map((message) => (
+                    <Grid
+                      container
+                      key={message._id}
+                      alignItems={'center'}
+                      marginBottom={{ xs: '0.5rem', md: '1rem' }}
+                    >
+                      <Grid size={{ xs: 2, md: 1 }}>
+                        <Avatar src="" sx={{ width: 52, height: 52 }} />
+                      </Grid>
+                      <Grid size={{ xs: 10, md: 11 }}>
+                        <Stack spacing={0.5}>
+                          <Paper sx={{ width: 'fit-content' }}>
+                            <Typography sx={{ padding: '0.9rem' }}>
+                              {message.content}
+                            </Typography>
+                          </Paper>
+                          <Typography
+                            variant="caption"
+                            sx={{ marginLeft: '0.25rem' }}
+                          >
+                            {new Date(message.createdAt).toLocaleString()}
+                          </Typography>
+                        </Stack>
+                      </Grid>
+                    </Grid>
+                  ))}
+                <div ref={divRef}></div>
+              </Box>
+            </Box>
+            <Paper
+              sx={{
+                p: 0.5,
+                display: 'flex',
+                alignItems: 'center',
+                width: '100%',
+                borderTop: '1px solid #ddd',
+                margin: '1rem 0',
               }}
-              color="primary"
-              sx={{ p: '10px' }}
             >
-              <SendIcon />
-            </IconButton>
-          </Paper>
-        </Stack>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                onChange={(event) => setMessage(event.target.value)}
+                value={message}
+                placeholder="Message"
+                onKeyDown={async (event) => {
+                  if (event.key === 'Enter') {
+                    await handleCreateMessage();
+                  }
+                }}
+              />
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <IconButton
+                onClick={handleCreateMessage}
+                color="primary"
+                sx={{ p: '10px' }}
+              >
+                <SendIcon />
+              </IconButton>
+            </Paper>
+          </Stack>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 
