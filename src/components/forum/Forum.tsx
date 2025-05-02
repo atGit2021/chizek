@@ -17,6 +17,7 @@ import { useCreateMessage } from '../../hooks/useCreateMessage';
 import { useEffect, useRef, useState } from 'react';
 import { useGetMessages } from '../../hooks/useGetMessage';
 import { useMessageCreated } from '../../hooks/useMessageCreated';
+import { Message } from '../../gql/graphql';
 
 const Forum = () => {
   const params = useParams();
@@ -24,13 +25,29 @@ const Forum = () => {
   const { data } = useGetForum({ _id: forumId });
   const [message, setMessage] = useState('');
   const [createMessage] = useCreateMessage(forumId);
-  const { data: messages } = useGetMessages({ forumId });
+  const { data: existingMessages } = useGetMessages({ forumId });
   const divRef = useRef<HTMLDivElement | null>(null);
-  const { data: latestMessage } = useMessageCreated({ forumId });
-  console.log(latestMessage);
+  const { data: publishedMessage } = useMessageCreated({ forumId });
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const scrollToBottom = () =>
     divRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+  useEffect(() => {
+    if (existingMessages) {
+      setMessages(existingMessages.messages);
+    }
+  }, [existingMessages]);
+
+  useEffect(() => {
+    const lastExistingMessage = messages[messages.length - 1]?._id;
+    if (
+      publishedMessage?.messageCreated &&
+      publishedMessage.messageCreated._id !== lastExistingMessage
+    ) {
+      setMessages([...messages, publishedMessage.messageCreated]);
+    }
+  }, [publishedMessage, messages]);
 
   useEffect(() => {
     setMessage('');
@@ -72,33 +89,39 @@ const Forum = () => {
                   overflowY: 'auto',
                 }}
               >
-                {messages?.messages.map((message) => (
-                  <Grid
-                    container
-                    key={message._id}
-                    alignItems={'center'}
-                    marginBottom={{ xs: '0.5rem', md: '1rem' }}
-                  >
-                    <Grid size={{ xs: 2, md: 1 }}>
-                      <Avatar src="" sx={{ width: 52, height: 52 }} />
-                    </Grid>
-                    <Grid size={{ xs: 10, md: 11 }}>
-                      <Stack spacing={0.5}>
-                        <Paper sx={{ width: 'fit-content' }}>
-                          <Typography sx={{ padding: '0.9rem' }}>
-                            {message.content}
+                {[...messages]
+                  .sort(
+                    (messageA, messageB) =>
+                      new Date(messageA.createdAt).getTime() -
+                      new Date(messageB.createdAt).getTime(),
+                  )
+                  .map((message) => (
+                    <Grid
+                      container
+                      key={message._id}
+                      alignItems={'center'}
+                      marginBottom={{ xs: '0.5rem', md: '1rem' }}
+                    >
+                      <Grid size={{ xs: 2, md: 1 }}>
+                        <Avatar src="" sx={{ width: 52, height: 52 }} />
+                      </Grid>
+                      <Grid size={{ xs: 10, md: 11 }}>
+                        <Stack spacing={0.5}>
+                          <Paper sx={{ width: 'fit-content' }}>
+                            <Typography sx={{ padding: '0.9rem' }}>
+                              {message.content}
+                            </Typography>
+                          </Paper>
+                          <Typography
+                            variant="caption"
+                            sx={{ marginLeft: '0.25rem' }}
+                          >
+                            {new Date(message.createdAt).toLocaleString()}
                           </Typography>
-                        </Paper>
-                        <Typography
-                          variant="caption"
-                          sx={{ marginLeft: '0.25rem' }}
-                        >
-                          {new Date(message.createdAt).toLocaleString()}
-                        </Typography>
-                      </Stack>
+                        </Stack>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                ))}
+                  ))}
                 <div ref={divRef}></div>
               </Box>
             </Box>
