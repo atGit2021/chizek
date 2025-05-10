@@ -1,7 +1,7 @@
 fragment ForumFragment on Forum {
   _id
   name
-  userId
-  isPrivate
-  userIds
+  latestMessage {
+    ...MessageFragment
+  }
 }

@@ -12,6 +12,7 @@ const useCreateForum = () => {
             const newForumRef = cache.writeFragment({
               data: data?.createForum,
               fragment: ForumFragmentFragmentDoc,
+              fragmentName: 'ForumFragment',
             });
             return [...existingForums, newForumRef];
           },

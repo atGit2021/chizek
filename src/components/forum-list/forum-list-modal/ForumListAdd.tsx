@@ -1,18 +1,11 @@
 import {
   Box,
   Button,
-  FormControlLabel,
-  FormGroup,
-  IconButton,
-  InputBase,
   Modal,
-  Paper,
   Stack,
-  Switch,
   TextField,
   Typography,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import { MouseEvent, useState } from 'react';
 import { useCreateForum } from '../../../hooks/useCreateForum';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +16,6 @@ interface ForumListAddProps {
 }
 
 const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
-  const [isPrivate, setIsPrivate] = useState(false);
   const [error, setError] = useState('');
   const [name, setName] = useState('');
   const [createForum, { loading }] = useCreateForum();
@@ -34,15 +26,14 @@ const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
   };
 
   const handleSave = async () => {
-    if (!isPrivate && !name.length) {
+    if (!name.length) {
       setError('Forum name is required.');
       return;
     }
     const result = await createForum({
       variables: {
         createForumInput: {
-          isPrivate,
-          name: name || undefined,
+          name: name,
         },
       },
     });
@@ -58,7 +49,6 @@ const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
   const onClose = () => {
     setError('');
     setName('');
-    setIsPrivate(false);
     handleClose();
   };
 
@@ -82,33 +72,12 @@ const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
           <Typography variant="h6" component="h2">
             Add Forum
           </Typography>
-          <FormGroup>
-            <FormControlLabel
-              style={{ width: 0 }}
-              control={
-                <Switch
-                  checked={isPrivate}
-                  onChange={(event) => setIsPrivate(event.target.checked)}
-                />
-              }
-              label="Private"
-            ></FormControlLabel>
-          </FormGroup>
-          {isPrivate ? (
-            <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}>
-              <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search Users" />
-              <IconButton sx={{ p: '10px' }}>
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-          ) : (
-            <TextField
-              label="Name"
-              error={!!error}
-              helperText={error}
-              onChange={(event) => setName(event.target.value)}
-            />
-          )}
+          <TextField
+            label="Name"
+            error={!!error}
+            helperText={error}
+            onChange={(event) => setName(event.target.value)}
+          />
           <Button variant="outlined" onClick={handleSave} disabled={loading}>
             {loading ? 'Saving...' : 'Save'}
           </Button>
