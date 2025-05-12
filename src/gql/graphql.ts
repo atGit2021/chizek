@@ -32,9 +32,7 @@ export type Scalars = {
 };
 
 export type CreateForumInput = {
-  isPrivate: Scalars['Boolean']['input'];
-  name?: InputMaybe<Scalars['String']['input']>;
-  userIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  name: Scalars['String']['input'];
 };
 
 export type CreateMessageInput = {
@@ -50,17 +48,8 @@ export type CreateUserInput = {
 export type Forum = {
   __typename?: 'Forum';
   _id: Scalars['ID']['output'];
-  isPrivate: Scalars['Boolean']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  userId: Scalars['String']['output'];
-  userIds: Array<Scalars['String']['output']>;
-};
-
-export type ForumFilterInput = {
-  isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  userId?: InputMaybe<Scalars['String']['input']>;
-  userIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  latestMessage?: Maybe<Message>;
+  name: Scalars['String']['output'];
 };
 
 export type Message = {
@@ -69,7 +58,7 @@ export type Message = {
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   forumId: Scalars['String']['output'];
-  ownerId: Scalars['String']['output'];
+  user: User;
 };
 
 export type Mutation = {
@@ -118,10 +107,6 @@ export type Query = {
   users: Array<User>;
 };
 
-export type QueryFindForumsArgs = {
-  filterQuery?: InputMaybe<ForumFilterInput>;
-};
-
 export type QueryForumArgs = {
   _id: Scalars['String']['input'];
 };
@@ -164,10 +149,15 @@ export type User = {
 export type ForumFragmentFragment = {
   __typename?: 'Forum';
   _id: string;
-  name?: string | null;
-  userId: string;
-  isPrivate: boolean;
-  userIds: Array<string>;
+  name: string;
+  latestMessage?: {
+    __typename?: 'Message';
+    _id: string;
+    content: string;
+    createdAt: any;
+    forumId: string;
+    user: { __typename?: 'User'; _id: string; email: string };
+  } | null;
 };
 
 export type MessageFragmentFragment = {
@@ -175,8 +165,8 @@ export type MessageFragmentFragment = {
   _id: string;
   content: string;
   createdAt: any;
-  ownerId: string;
   forumId: string;
+  user: { __typename?: 'User'; _id: string; email: string };
 };
 
 export type CreateForumMutationVariables = Exact<{
@@ -188,10 +178,15 @@ export type CreateForumMutation = {
   createForum: {
     __typename?: 'Forum';
     _id: string;
-    name?: string | null;
-    userId: string;
-    isPrivate: boolean;
-    userIds: Array<string>;
+    name: string;
+    latestMessage?: {
+      __typename?: 'Message';
+      _id: string;
+      content: string;
+      createdAt: any;
+      forumId: string;
+      user: { __typename?: 'User'; _id: string; email: string };
+    } | null;
   };
 };
 
@@ -206,8 +201,8 @@ export type CreateMessageMutation = {
     _id: string;
     content: string;
     createdAt: any;
-    ownerId: string;
     forumId: string;
+    user: { __typename?: 'User'; _id: string; email: string };
   };
 };
 
@@ -236,10 +231,15 @@ export type ForumQuery = {
   forum: {
     __typename?: 'Forum';
     _id: string;
-    name?: string | null;
-    userId: string;
-    isPrivate: boolean;
-    userIds: Array<string>;
+    name: string;
+    latestMessage?: {
+      __typename?: 'Message';
+      _id: string;
+      content: string;
+      createdAt: any;
+      forumId: string;
+      user: { __typename?: 'User'; _id: string; email: string };
+    } | null;
   };
 };
 
@@ -250,10 +250,15 @@ export type ForumsQuery = {
   forums: Array<{
     __typename?: 'Forum';
     _id: string;
-    name?: string | null;
-    userId: string;
-    isPrivate: boolean;
-    userIds: Array<string>;
+    name: string;
+    latestMessage?: {
+      __typename?: 'Message';
+      _id: string;
+      content: string;
+      createdAt: any;
+      forumId: string;
+      user: { __typename?: 'User'; _id: string; email: string };
+    } | null;
   }>;
 };
 
@@ -268,8 +273,8 @@ export type MessagesQuery = {
     _id: string;
     content: string;
     createdAt: any;
-    ownerId: string;
     forumId: string;
+    user: { __typename?: 'User'; _id: string; email: string };
   }>;
 };
 
@@ -284,34 +289,11 @@ export type MessageCreatedSubscription = {
     _id: string;
     content: string;
     createdAt: any;
-    ownerId: string;
     forumId: string;
+    user: { __typename?: 'User'; _id: string; email: string };
   };
 };
 
-export const ForumFragmentFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'ForumFragment' },
-      typeCondition: {
-        kind: 'NamedType',
-        name: { kind: 'Name', value: 'Forum' },
-      },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'isPrivate' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userIds' } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ForumFragmentFragment, unknown>;
 export const MessageFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -328,13 +310,84 @@ export const MessageFragmentFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
           { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
         ],
       },
     },
   ],
 } as unknown as DocumentNode<MessageFragmentFragment, unknown>;
+export const ForumFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ForumFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Forum' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'latestMessage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MessageFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MessageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Message' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ForumFragmentFragment, unknown>;
 export const CreateForumDocument = {
   kind: 'Document',
   definitions: [
@@ -389,6 +442,34 @@ export const CreateForumDocument = {
     },
     {
       kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MessageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Message' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'ForumFragment' },
       typeCondition: {
         kind: 'NamedType',
@@ -399,9 +480,19 @@ export const CreateForumDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'isPrivate' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userIds' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'latestMessage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MessageFragment' },
+                },
+              ],
+            },
+          },
         ],
       },
     },
@@ -472,8 +563,18 @@ export const CreateMessageDocument = {
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
           { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
         ],
       },
     },
@@ -611,6 +712,34 @@ export const ForumDocument = {
     },
     {
       kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MessageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Message' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'ForumFragment' },
       typeCondition: {
         kind: 'NamedType',
@@ -621,9 +750,19 @@ export const ForumDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'isPrivate' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userIds' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'latestMessage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MessageFragment' },
+                },
+              ],
+            },
+          },
         ],
       },
     },
@@ -657,6 +796,34 @@ export const ForumsDocument = {
     },
     {
       kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MessageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Message' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'ForumFragment' },
       typeCondition: {
         kind: 'NamedType',
@@ -667,9 +834,19 @@ export const ForumsDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'isPrivate' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'userIds' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'latestMessage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MessageFragment' },
+                },
+              ],
+            },
+          },
         ],
       },
     },
@@ -740,8 +917,18 @@ export const MessagesDocument = {
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
           { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
         ],
       },
     },
@@ -812,8 +999,18 @@ export const MessageCreatedDocument = {
           { kind: 'Field', name: { kind: 'Name', value: '_id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'ownerId' } },
           { kind: 'Field', name: { kind: 'Name', value: 'forumId' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
         ],
       },
     },
