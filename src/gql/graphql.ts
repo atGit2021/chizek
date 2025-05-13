@@ -98,7 +98,6 @@ export type MutationUpdateUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  findForums: Array<Forum>;
   forum: Forum;
   forums: Array<Forum>;
   getCurrentUser: User;
