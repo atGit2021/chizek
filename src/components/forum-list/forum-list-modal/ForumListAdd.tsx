@@ -40,7 +40,7 @@ const ForumListAdd = ({ open, handleClose }: ForumListAddProps) => {
     const newForumId = result.data?.createForum._id;
     if (newForumId) {
       onClose();
-      navigate(`/forum/${result.data?.createForum._id}`);
+      navigate(`/forums/${result.data?.createForum._id}`);
     } else {
       setError('Forum creation failed. Please try again.');
     }
