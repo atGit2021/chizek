@@ -1,5 +1,3 @@
-import { useParams } from 'react-router-dom';
-import { useGetForum } from '../../hooks/useGetForum';
 import {
   Avatar,
   Box,
@@ -11,17 +9,15 @@ import {
   Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import ForumList from '../forum-list/ForumList';
 import SendIcon from '@mui/icons-material/Send';
 import { useCreateMessage } from '../../hooks/useCreateMessage';
 import { useEffect, useRef, useState } from 'react';
 import { useGetMessages } from '../../hooks/useGetMessage';
 import { useMessageCreated } from '../../hooks/useMessageCreated';
+import { ForumProps } from '../../interfaces/forum-props.interface';
 
-const Forum = () => {
-  const params = useParams();
-  const forumId = params._id!;
-  const { data } = useGetForum({ _id: forumId });
+const Forum = ({ forum }: ForumProps) => {
+  const forumId = forum._id;
   const [message, setMessage] = useState('');
   const [createMessage] = useCreateMessage();
   const { data: messages } = useGetMessages({ forumId });
@@ -50,9 +46,6 @@ const Forum = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Grid container spacing={2} sx={{ flex: 1 }}>
-        <Grid size={{ xs: 12, md: 3 }}>
-          <ForumList />
-        </Grid>
         <Grid size={{ xs: 12, md: 9 }}>
           <Stack
             sx={{
@@ -64,7 +57,7 @@ const Forum = () => {
           >
             <Box sx={{ flex: 1, overflowY: 'auto', padding: 2 }}>
               <Typography variant="h4" sx={{ marginBottom: 2 }}>
-                {data?.forum.name}
+                {forum.name}
               </Typography>
               <Box
                 sx={{

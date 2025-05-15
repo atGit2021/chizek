@@ -4,24 +4,20 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { ForumFragmentFragment } from '../../../gql/graphql';
 import ListItemButton from '@mui/material/ListItemButton';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ForumProps } from '../../../interfaces/forum-props.interface';
 
-interface ForumListItemProps {
-  forum: ForumFragmentFragment;
-}
-
-const ForumListItem = ({ forum }: ForumListItemProps) => {
+const ForumListItem = ({ forum }: ForumProps) => {
   const navigate = useNavigate();
-  const pathId = useLocation().pathname.split('/forum/')[1];
+  const pathId = useLocation().pathname.split('/forums/')[1];
   const isSelected = forum._id === pathId;
 
   return (
     <>
       <ListItem alignItems="flex-start" disablePadding>
         <ListItemButton
-          onClick={() => navigate(`/forum/${forum._id}`)}
+          onClick={() => navigate(`/forums/${forum._id}`)}
           selected={isSelected}
         >
           <ListItemAvatar>
