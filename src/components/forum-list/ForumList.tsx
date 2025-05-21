@@ -1,14 +1,13 @@
 import List from '@mui/material/List';
 import { Divider, Stack } from '@mui/material';
 import { useState } from 'react';
-import { useGetForums } from '../../hooks/useGetForums';
 import ForumListItem from './forum-list-item/ForumListItem';
 import ForumListHeader from './forum-list-header/ForumListHeader';
 import ForumListAdd from './forum-list-modal/ForumListAdd';
+import { ForumsQuery } from '../../gql/graphql';
 
-const ForumList = () => {
+const ForumList = ({ forums }: { forums: ForumsQuery | undefined }) => {
   const [forumListAddVisible, setForumListAddVisible] = useState(false);
-  const { data } = useGetForums();
 
   return (
     <>
@@ -27,7 +26,7 @@ const ForumList = () => {
             overflow: 'auto',
           }}
         >
-          {data?.forums
+          {forums?.forums
             .map((forum) => <ForumListItem key={forum._id} forum={forum} />)
             .reverse()}
         </List>
