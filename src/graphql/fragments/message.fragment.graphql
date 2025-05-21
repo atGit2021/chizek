@@ -6,5 +6,6 @@ fragment MessageFragment on Message {
   user {
     _id
     email
+    username
   }
 }

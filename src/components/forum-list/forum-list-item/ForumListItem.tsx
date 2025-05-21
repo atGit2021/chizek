@@ -32,9 +32,11 @@ const ForumListItem = ({ forum }: { forum: ForumFragmentFragment }) => {
                   variant="body2"
                   sx={{ color: 'text.primary', display: 'inline' }}
                 >
-                  Markus
+                  {forum.latestMessage?.user?.username}
                 </Typography>
-                {" — I'll be in your neighborhood doing errands this…"}
+                {forum.latestMessage?.content
+                  ? ` - ${forum.latestMessage.content}`
+                  : ''}
               </>
             }
           />

@@ -43,6 +43,7 @@ export type CreateMessageInput = {
 export type CreateUserInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 export type Forum = {
@@ -137,12 +138,14 @@ export type UpdateForumInput = {
 export type UpdateUserInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
   email: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type ForumFragmentFragment = {
@@ -155,7 +158,7 @@ export type ForumFragmentFragment = {
     content: string;
     createdAt: any;
     forumId: string;
-    user: { __typename?: 'User'; _id: string; email: string };
+    user: { __typename?: 'User'; _id: string; email: string; username: string };
   } | null;
 };
 
@@ -165,7 +168,7 @@ export type MessageFragmentFragment = {
   content: string;
   createdAt: any;
   forumId: string;
-  user: { __typename?: 'User'; _id: string; email: string };
+  user: { __typename?: 'User'; _id: string; email: string; username: string };
 };
 
 export type CreateForumMutationVariables = Exact<{
@@ -184,7 +187,12 @@ export type CreateForumMutation = {
       content: string;
       createdAt: any;
       forumId: string;
-      user: { __typename?: 'User'; _id: string; email: string };
+      user: {
+        __typename?: 'User';
+        _id: string;
+        email: string;
+        username: string;
+      };
     } | null;
   };
 };
@@ -201,7 +209,7 @@ export type CreateMessageMutation = {
     content: string;
     createdAt: any;
     forumId: string;
-    user: { __typename?: 'User'; _id: string; email: string };
+    user: { __typename?: 'User'; _id: string; email: string; username: string };
   };
 };
 
@@ -211,7 +219,12 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = {
   __typename?: 'Mutation';
-  createUser: { __typename?: 'User'; _id: string; email: string };
+  createUser: {
+    __typename?: 'User';
+    _id: string;
+    email: string;
+    username: string;
+  };
 };
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
@@ -237,7 +250,12 @@ export type ForumQuery = {
       content: string;
       createdAt: any;
       forumId: string;
-      user: { __typename?: 'User'; _id: string; email: string };
+      user: {
+        __typename?: 'User';
+        _id: string;
+        email: string;
+        username: string;
+      };
     } | null;
   };
 };
@@ -256,7 +274,12 @@ export type ForumsQuery = {
       content: string;
       createdAt: any;
       forumId: string;
-      user: { __typename?: 'User'; _id: string; email: string };
+      user: {
+        __typename?: 'User';
+        _id: string;
+        email: string;
+        username: string;
+      };
     } | null;
   }>;
 };
@@ -273,7 +296,7 @@ export type MessagesQuery = {
     content: string;
     createdAt: any;
     forumId: string;
-    user: { __typename?: 'User'; _id: string; email: string };
+    user: { __typename?: 'User'; _id: string; email: string; username: string };
   }>;
 };
 
@@ -289,7 +312,7 @@ export type MessageCreatedSubscription = {
     content: string;
     createdAt: any;
     forumId: string;
-    user: { __typename?: 'User'; _id: string; email: string };
+    user: { __typename?: 'User'; _id: string; email: string; username: string };
   };
 };
 
@@ -318,6 +341,7 @@ export const MessageFragmentFragmentDoc = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -379,6 +403,7 @@ export const ForumFragmentFragmentDoc = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -461,6 +486,7 @@ export const CreateForumDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -571,6 +597,7 @@ export const CreateMessageDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -626,6 +653,7 @@ export const CreateUserDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -731,6 +759,7 @@ export const ForumDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -815,6 +844,7 @@ export const ForumsDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -925,6 +955,7 @@ export const MessagesDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -1007,6 +1038,7 @@ export const MessageCreatedDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
