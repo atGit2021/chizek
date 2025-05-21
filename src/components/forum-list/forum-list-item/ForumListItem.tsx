@@ -6,9 +6,9 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ForumProps } from '../../../interfaces/forum-props.interface';
+import { ForumFragmentFragment } from '../../../gql/graphql';
 
-const ForumListItem = ({ forum }: ForumProps) => {
+const ForumListItem = ({ forum }: { forum: ForumFragmentFragment }) => {
   const navigate = useNavigate();
   const pathId = useLocation().pathname.split('/forums/')[1];
   const isSelected = forum._id === pathId;

@@ -6,10 +6,7 @@ import ForumListHeader from './forum-list-header/ForumListHeader';
 import ForumListAdd from './forum-list-modal/ForumListAdd';
 import { ForumsQuery } from '../../gql/graphql';
 
-interface ForumListProps {
-  forums: ForumsQuery | undefined;
-}
-const ForumList = ({ forums }: ForumListProps) => {
+const ForumList = ({ forums }: { forums: ForumsQuery | undefined }) => {
   const [forumListAddVisible, setForumListAddVisible] = useState(false);
 
   return (

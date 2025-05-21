@@ -14,9 +14,9 @@ import { useCreateMessage } from '../../hooks/useCreateMessage';
 import { useEffect, useRef, useState } from 'react';
 import { useGetMessages } from '../../hooks/useGetMessage';
 import { useMessageCreated } from '../../hooks/useMessageCreated';
-import { ForumProps } from '../../interfaces/forum-props.interface';
+import { ForumFragmentFragment } from '../../gql/graphql';
 
-const Forum = ({ forum }: ForumProps) => {
+const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
   const forumId = forum._id;
   const [message, setMessage] = useState('');
   const [createMessage] = useCreateMessage();
