@@ -2,12 +2,11 @@ import { ApolloCache } from '@apollo/client';
 import {
   Message,
   MessagesDocument,
-  MessagesQuery,
   MessagesQueryVariables,
 } from '../gql/graphql';
 
 export const updateMessages = (
-  cache: ApolloCache<MessagesQuery>,
+  cache: ApolloCache<unknown>,
   message: Message,
 ) => {
   const messagesQueryOptions = {

@@ -1,10 +1,10 @@
-import { ApolloCache, useSubscription } from '@apollo/client';
+import { useSubscription } from '@apollo/client';
 import {
   MessageCreatedDocument,
-  MessagesQuery,
   SubscriptionMessageCreatedArgs,
 } from '../gql/graphql';
 import { updateMessages } from '../cache/messages';
+import { updateLatestMessage } from '../cache/latestMessage';
 
 export const useMessageCreated = (
   variables: SubscriptionMessageCreatedArgs,
@@ -13,10 +13,8 @@ export const useMessageCreated = (
     variables,
     onData: ({ client, data }) => {
       if (data.data) {
-        updateMessages(
-          client.cache as ApolloCache<MessagesQuery>,
-          data.data.messageCreated,
-        );
+        updateMessages(client.cache, data.data.messageCreated);
+        updateLatestMessage(client.cache, data.data.messageCreated);
       }
     },
   });
