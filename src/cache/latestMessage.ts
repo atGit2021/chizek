@@ -9,7 +9,6 @@ export const updateLatestMessage = (
   cache: ApolloCache<unknown>,
   message: Message,
 ) => {
-  console.log('cache: ' + cache.extract());
   cache.modify({
     fields: {
       forums(existingForums = []) {
