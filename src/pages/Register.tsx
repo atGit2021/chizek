@@ -10,8 +10,7 @@ import { UNKNOWN_ERROR_MESSAGE } from '../constants/errors';
 interface RegistrationData {
   email: string;
   password: string;
-  username?: string;
-  phone?: string;
+  username: string;
 }
 
 const Register = () => {
@@ -19,13 +18,18 @@ const Register = () => {
   const [error, setError] = useState('');
   const { login } = useLogin();
 
-  const handleRegister = async ({ email, password }: RegistrationData) => {
+  const handleRegister = async ({
+    email,
+    password,
+    username,
+  }: RegistrationData) => {
     try {
       await createUser({
         variables: {
           createUserInput: {
             email,
             password,
+            username,
           },
         },
       });
@@ -45,7 +49,6 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
-    phone: '',
   };
 
   return (
