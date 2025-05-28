@@ -5,9 +5,14 @@ import ForumListItem from './forum-list-item/ForumListItem';
 import ForumListHeader from './forum-list-header/ForumListHeader';
 import ForumListAdd from './forum-list-modal/ForumListAdd';
 import { ForumsQuery } from '../../gql/graphql';
+import { useMessageCreated } from '../../hooks/useMessageCreated';
 
 const ForumList = ({ forums }: { forums: ForumsQuery | undefined }) => {
   const [forumListAddVisible, setForumListAddVisible] = useState(false);
+
+  useMessageCreated({
+    forumIds: forums?.forums.map((forum) => forum._id) || [],
+  });
 
   return (
     <>

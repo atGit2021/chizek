@@ -23,7 +23,7 @@ type Documents = {
   'query Forum($_id: String!) {\n  forum(_id: $_id) {\n    ...ForumFragment\n  }\n}': typeof types.ForumDocument;
   'query Forums {\n  forums {\n    ...ForumFragment\n  }\n}': typeof types.ForumsDocument;
   'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}': typeof types.MessagesDocument;
-  'subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}': typeof types.MessageCreatedDocument;
+  'subscription MessageCreated($forumIds: [String!]!) {\n  messageCreated(forumIds: $forumIds) {\n    ...MessageFragment\n  }\n}': typeof types.MessageCreatedDocument;
 };
 const documents: Documents = {
   'fragment ForumFragment on Forum {\n  _id\n  name\n  latestMessage {\n    ...MessageFragment\n  }\n}':
@@ -44,7 +44,7 @@ const documents: Documents = {
     types.ForumsDocument,
   'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}':
     types.MessagesDocument,
-  'subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}':
+  'subscription MessageCreated($forumIds: [String!]!) {\n  messageCreated(forumIds: $forumIds) {\n    ...MessageFragment\n  }\n}':
     types.MessageCreatedDocument,
 };
 
@@ -120,8 +120,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}',
-): (typeof documents)['subscription MessageCreated($forumId: String!) {\n  messageCreated(forumId: $forumId) {\n    ...MessageFragment\n  }\n}'];
+  source: 'subscription MessageCreated($forumIds: [String!]!) {\n  messageCreated(forumIds: $forumIds) {\n    ...MessageFragment\n  }\n}',
+): (typeof documents)['subscription MessageCreated($forumIds: [String!]!) {\n  messageCreated(forumIds: $forumIds) {\n    ...MessageFragment\n  }\n}'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
