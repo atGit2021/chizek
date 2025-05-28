@@ -125,7 +125,7 @@ export type Subscription = {
 };
 
 export type SubscriptionMessageCreatedArgs = {
-  forumId: Scalars['String']['input'];
+  forumIds: Array<Scalars['String']['input']>;
 };
 
 export type UpdateForumInput = {
@@ -301,7 +301,7 @@ export type MessagesQuery = {
 };
 
 export type MessageCreatedSubscriptionVariables = Exact<{
-  forumId: Scalars['String']['input'];
+  forumIds: Array<Scalars['String']['input']> | Scalars['String']['input'];
 }>;
 
 export type MessageCreatedSubscription = {
@@ -976,13 +976,19 @@ export const MessageCreatedDocument = {
           kind: 'VariableDefinition',
           variable: {
             kind: 'Variable',
-            name: { kind: 'Name', value: 'forumId' },
+            name: { kind: 'Name', value: 'forumIds' },
           },
           type: {
             kind: 'NonNullType',
             type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: { kind: 'Name', value: 'String' },
+                },
+              },
             },
           },
         },
@@ -996,10 +1002,10 @@ export const MessageCreatedDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'forumId' },
+                name: { kind: 'Name', value: 'forumIds' },
                 value: {
                   kind: 'Variable',
-                  name: { kind: 'Name', value: 'forumId' },
+                  name: { kind: 'Name', value: 'forumIds' },
                 },
               },
             ],

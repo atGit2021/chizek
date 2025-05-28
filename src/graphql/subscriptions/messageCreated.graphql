@@ -1,7 +1,7 @@
 # import MessageFragment from '../fragments/message.fragment.graphql'
 
-subscription MessageCreated($forumId: String!) {
-  messageCreated(forumId: $forumId) {
+subscription MessageCreated($forumIds: [String!]!) {
+  messageCreated(forumIds: $forumIds) {
     ...MessageFragment
   }
 }

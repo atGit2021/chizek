@@ -13,7 +13,6 @@ import SendIcon from '@mui/icons-material/Send';
 import { useCreateMessage } from '../../hooks/useCreateMessage';
 import { useEffect, useRef, useState } from 'react';
 import { useGetMessages } from '../../hooks/useGetMessage';
-import { useMessageCreated } from '../../hooks/useMessageCreated';
 import { ForumFragmentFragment } from '../../gql/graphql';
 
 const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
@@ -22,9 +21,6 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
   const [createMessage] = useCreateMessage();
   const { data: messages } = useGetMessages({ forumId });
   const divRef = useRef<HTMLDivElement | null>(null);
-
-  useMessageCreated({ forumId });
-
   const scrollToBottom = () =>
     divRef.current?.scrollIntoView({ behavior: 'smooth' });
 
