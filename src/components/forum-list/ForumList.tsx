@@ -1,13 +1,22 @@
-import List from '@mui/material/List';
-import { Divider, Stack } from '@mui/material';
+import { Box, Divider, Stack } from '@mui/material';
 import { useState } from 'react';
 import ForumListItem from './forum-list-item/ForumListItem';
 import ForumListHeader from './forum-list-header/ForumListHeader';
 import ForumListAdd from './forum-list-modal/ForumListAdd';
-import { ForumsQuery } from '../../gql/graphql';
+import { ForumsQuery, ForumsQueryVariables } from '../../gql/graphql';
 import { useMessageCreated } from '../../hooks/useMessageCreated';
+import InfiniteScroll from 'react-infinite-scroller';
+import { PAGE_SIZE } from '../../constants/page-size';
 
-const ForumList = ({ forums }: { forums: ForumsQuery | undefined }) => {
+const ForumList = ({
+  forums,
+  fetchMore,
+  forumsCount,
+}: {
+  forums: ForumsQuery | undefined;
+  fetchMore: (options: { variables: ForumsQueryVariables }) => Promise<unknown>;
+  forumsCount: number | undefined;
+}) => {
   const [forumListAddVisible, setForumListAddVisible] = useState(false);
 
   useMessageCreated({
@@ -23,7 +32,7 @@ const ForumList = ({ forums }: { forums: ForumsQuery | undefined }) => {
       <Stack>
         <ForumListHeader handleAddForum={() => setForumListAddVisible(true)} />
         <Divider />
-        <List
+        <Box
           sx={{
             width: '100%',
             bgcolor: 'background.paper',
@@ -31,18 +40,38 @@ const ForumList = ({ forums }: { forums: ForumsQuery | undefined }) => {
             overflow: 'auto',
           }}
         >
-          {forums?.forums &&
-            [...forums.forums]
-              .sort((forumA, forumB) => {
-                if (!forumA.latestMessage) return 1;
-                if (!forumB.latestMessage) return -1;
-                return (
-                  new Date(forumB.latestMessage.createdAt).getTime() -
-                  new Date(forumA.latestMessage.createdAt).getTime()
-                );
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={() =>
+              fetchMore({
+                variables: {
+                  skip: forums?.forums.length || 0,
+                  limit: PAGE_SIZE,
+                },
               })
-              .map((forum) => <ForumListItem key={forum._id} forum={forum} />)}
-        </List>
+            }
+            hasMore={
+              forums?.forums && forumsCount
+                ? forumsCount > forums?.forums.length
+                : false
+            }
+            useWindow={false}
+          >
+            {forums?.forums &&
+              [...forums.forums]
+                .sort((forumA, forumB) => {
+                  if (!forumA.latestMessage) return 1;
+                  if (!forumB.latestMessage) return -1;
+                  return (
+                    new Date(forumB.latestMessage.createdAt).getTime() -
+                    new Date(forumA.latestMessage.createdAt).getTime()
+                  );
+                })
+                .map((forum) => (
+                  <ForumListItem key={forum._id} forum={forum} />
+                ))}
+          </InfiniteScroll>
+        </Box>
       </Stack>
     </>
   );

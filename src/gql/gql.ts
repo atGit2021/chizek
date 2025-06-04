@@ -21,7 +21,7 @@ type Documents = {
   'mutation CreateUser($createUserInput: CreateUserInput!) {\n  createUser(createUserInput: $createUserInput) {\n    _id\n    email\n    username\n  }\n}': typeof types.CreateUserDocument;
   'query GetCurrentUser {\n  getCurrentUser {\n    _id\n    email\n  }\n}': typeof types.GetCurrentUserDocument;
   'query Forum($_id: String!) {\n  forum(_id: $_id) {\n    ...ForumFragment\n  }\n}': typeof types.ForumDocument;
-  'query Forums {\n  forums {\n    ...ForumFragment\n  }\n}': typeof types.ForumsDocument;
+  'query Forums($skip: Int!, $limit: Int!) {\n  forums(skip: $skip, limit: $limit) {\n    ...ForumFragment\n  }\n}': typeof types.ForumsDocument;
   'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}': typeof types.MessagesDocument;
   'subscription MessageCreated($forumIds: [String!]!) {\n  messageCreated(forumIds: $forumIds) {\n    ...MessageFragment\n  }\n}': typeof types.MessageCreatedDocument;
 };
@@ -40,7 +40,7 @@ const documents: Documents = {
     types.GetCurrentUserDocument,
   'query Forum($_id: String!) {\n  forum(_id: $_id) {\n    ...ForumFragment\n  }\n}':
     types.ForumDocument,
-  'query Forums {\n  forums {\n    ...ForumFragment\n  }\n}':
+  'query Forums($skip: Int!, $limit: Int!) {\n  forums(skip: $skip, limit: $limit) {\n    ...ForumFragment\n  }\n}':
     types.ForumsDocument,
   'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}':
     types.MessagesDocument,
@@ -108,8 +108,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query Forums {\n  forums {\n    ...ForumFragment\n  }\n}',
-): (typeof documents)['query Forums {\n  forums {\n    ...ForumFragment\n  }\n}'];
+  source: 'query Forums($skip: Int!, $limit: Int!) {\n  forums(skip: $skip, limit: $limit) {\n    ...ForumFragment\n  }\n}',
+): (typeof documents)['query Forums($skip: Int!, $limit: Int!) {\n  forums(skip: $skip, limit: $limit) {\n    ...ForumFragment\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

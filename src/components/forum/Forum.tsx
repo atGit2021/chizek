@@ -30,6 +30,8 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
   }, [forumId, messages]);
 
   const handleCreateMessage = async () => {
+    if (!message.trim()) return;
+
     await createMessage({
       variables: {
         createMessageInput: { content: message, forumId },
@@ -114,10 +116,13 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
                 value={message}
                 placeholder="Message"
                 onKeyDown={async (event) => {
-                  if (event.key === 'Enter') {
+                  if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
                     await handleCreateMessage();
                   }
                 }}
+                multiline
+                maxRows={4}
               />
               <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
               <IconButton
