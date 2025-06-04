@@ -45,7 +45,24 @@ const splitLink = split(
 );
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          forums: {
+            keyArgs: false,
+            merge(existing, incoming, { args }) {
+              const merged = existing ? [...existing] : [];
+              for (let i = 0; i < incoming.length; ++i) {
+                merged[args?.skip + i] = incoming[i];
+              }
+              return merged;
+            },
+          },
+        },
+      },
+    },
+  }),
   link: logoutLink.concat(splitLink),
 });
 
