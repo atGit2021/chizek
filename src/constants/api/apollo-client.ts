@@ -6,6 +6,7 @@ import { PUBLIC_ROUTES } from '../../routes/Routes';
 import { createClient } from 'graphql-ws';
 import { WS_URL } from './urls';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { Forum, Message } from '../../gql/graphql';
 
 interface OriginalError {
   statusCode: number;
@@ -51,13 +52,11 @@ const client = new ApolloClient({
         fields: {
           forums: {
             keyArgs: false,
-            merge(existing, incoming, { args }) {
-              const merged = existing ? [...existing] : [];
-              for (let i = 0; i < incoming.length; ++i) {
-                merged[args?.skip + i] = incoming[i];
-              }
-              return merged;
-            },
+            merge,
+          },
+          messages: {
+            keyArgs: ['forumId'],
+            merge,
           },
         },
       },
@@ -65,5 +64,19 @@ const client = new ApolloClient({
   }),
   link: logoutLink.concat(splitLink),
 });
+
+function merge<T extends Forum | Message>(
+  existing: T[] | undefined,
+  incoming: T[],
+  { args }: { args: { skip?: number; limit?: number } | null },
+) {
+  const merged = existing ? [...existing] : [];
+  const skip = args?.skip ?? 0;
+
+  for (let i = 0; i < incoming.length; ++i) {
+    merged[skip + i] = incoming[i];
+  }
+  return merged;
+}
 
 export default client;

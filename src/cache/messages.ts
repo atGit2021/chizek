@@ -4,6 +4,7 @@ import {
   MessagesDocument,
   MessagesQueryVariables,
 } from '../gql/graphql';
+import { PAGE_SIZE } from '../constants/page-size';
 
 export const updateMessages = (
   cache: ApolloCache<unknown>,
@@ -13,6 +14,8 @@ export const updateMessages = (
     query: MessagesDocument,
     variables: {
       forumId: message.forumId,
+      skip: 0,
+      limit: PAGE_SIZE,
     } satisfies MessagesQueryVariables,
   };
   const messages = cache.readQuery({ ...messagesQueryOptions });

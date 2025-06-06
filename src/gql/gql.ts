@@ -22,7 +22,7 @@ type Documents = {
   'query GetCurrentUser {\n  getCurrentUser {\n    _id\n    email\n  }\n}': typeof types.GetCurrentUserDocument;
   'query Forum($_id: String!) {\n  forum(_id: $_id) {\n    ...ForumFragment\n  }\n}': typeof types.ForumDocument;
   'query Forums($skip: Int!, $limit: Int!) {\n  forums(skip: $skip, limit: $limit) {\n    ...ForumFragment\n  }\n}': typeof types.ForumsDocument;
-  'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}': typeof types.MessagesDocument;
+  'query Messages($forumId: String!, $skip: Int!, $limit: Int!) {\n  messages(forumId: $forumId, skip: $skip, limit: $limit) {\n    ...MessageFragment\n  }\n}': typeof types.MessagesDocument;
   'subscription MessageCreated($forumIds: [String!]!) {\n  messageCreated(forumIds: $forumIds) {\n    ...MessageFragment\n  }\n}': typeof types.MessageCreatedDocument;
 };
 const documents: Documents = {
@@ -42,7 +42,7 @@ const documents: Documents = {
     types.ForumDocument,
   'query Forums($skip: Int!, $limit: Int!) {\n  forums(skip: $skip, limit: $limit) {\n    ...ForumFragment\n  }\n}':
     types.ForumsDocument,
-  'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}':
+  'query Messages($forumId: String!, $skip: Int!, $limit: Int!) {\n  messages(forumId: $forumId, skip: $skip, limit: $limit) {\n    ...MessageFragment\n  }\n}':
     types.MessagesDocument,
   'subscription MessageCreated($forumIds: [String!]!) {\n  messageCreated(forumIds: $forumIds) {\n    ...MessageFragment\n  }\n}':
     types.MessageCreatedDocument,
@@ -114,8 +114,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}',
-): (typeof documents)['query Messages($forumId: String!) {\n  messages(forumId: $forumId) {\n    ...MessageFragment\n  }\n}'];
+  source: 'query Messages($forumId: String!, $skip: Int!, $limit: Int!) {\n  messages(forumId: $forumId, skip: $skip, limit: $limit) {\n    ...MessageFragment\n  }\n}',
+): (typeof documents)['query Messages($forumId: String!, $skip: Int!, $limit: Int!) {\n  messages(forumId: $forumId, skip: $skip, limit: $limit) {\n    ...MessageFragment\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
