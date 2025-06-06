@@ -14,19 +14,34 @@ import { useCreateMessage } from '../../hooks/useCreateMessage';
 import { useEffect, useRef, useState } from 'react';
 import { useGetMessages } from '../../hooks/useGetMessage';
 import { ForumFragmentFragment } from '../../gql/graphql';
+import { PAGE_SIZE } from '../../constants/page-size';
+import { useCountMessages } from '../../hooks/useCountMessages';
+import InfiniteScroll from 'react-infinite-scroller';
 
 const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
   const forumId = forum._id;
   const [message, setMessage] = useState('');
   const [createMessage] = useCreateMessage();
-  const { data: messages } = useGetMessages({ forumId });
+  const { data: messages, fetchMore } = useGetMessages({
+    forumId,
+    skip: 0,
+    limit: PAGE_SIZE,
+  });
   const divRef = useRef<HTMLDivElement | null>(null);
+  const { messagesCount, countMessages } = useCountMessages(forumId);
+
+  useEffect(() => {
+    countMessages();
+  }, [countMessages]);
+
   const scrollToBottom = () =>
     divRef.current?.scrollIntoView({ behavior: 'smooth' });
 
   useEffect(() => {
-    setMessage('');
-    scrollToBottom();
+    if (messages?.messages && messages.messages.length <= PAGE_SIZE) {
+      setMessage('');
+      scrollToBottom();
+    }
   }, [forumId, messages]);
 
   const handleCreateMessage = async () => {
@@ -63,41 +78,59 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
                   overflowY: 'auto',
                 }}
               >
-                {messages &&
-                  [...messages.messages]
-                    .sort(
-                      (messageA, messageB) =>
-                        new Date(messageA.createdAt).getTime() -
-                        new Date(messageB.createdAt).getTime(),
-                    )
-                    .map((message) => (
-                      <Grid
-                        container
-                        key={message._id}
-                        alignItems={'center'}
-                        marginBottom={{ xs: '0.5rem', md: '1rem' }}
-                      >
-                        <Grid size={{ xs: 2, md: 1 }}>
-                          <Avatar src="" sx={{ width: 52, height: 52 }} />
-                        </Grid>
-                        <Grid size={{ xs: 10, md: 11 }}>
-                          <Stack spacing={0.5}>
-                            <Paper sx={{ width: 'fit-content' }}>
-                              <Typography sx={{ padding: '0.9rem' }}>
-                                {message.content}
+                <InfiniteScroll
+                  pageStart={0}
+                  isReverse={true}
+                  loadMore={() => {
+                    fetchMore({
+                      variables: {
+                        skip: messages?.messages.length,
+                      },
+                    });
+                  }}
+                  hasMore={
+                    messages && messagesCount
+                      ? messagesCount > messages?.messages.length
+                      : false
+                  }
+                  useWindow={false}
+                >
+                  {messages &&
+                    [...messages.messages]
+                      .sort(
+                        (messageA, messageB) =>
+                          new Date(messageA.createdAt).getTime() -
+                          new Date(messageB.createdAt).getTime(),
+                      )
+                      .map((message) => (
+                        <Grid
+                          container
+                          key={message._id}
+                          alignItems={'center'}
+                          marginBottom={{ xs: '0.5rem', md: '1rem' }}
+                        >
+                          <Grid size={{ xs: 2, md: 1 }}>
+                            <Avatar src="" sx={{ width: 52, height: 52 }} />
+                          </Grid>
+                          <Grid size={{ xs: 10, md: 11 }}>
+                            <Stack spacing={0.5}>
+                              <Paper sx={{ width: 'fit-content' }}>
+                                <Typography sx={{ padding: '0.9rem' }}>
+                                  {message.content}
+                                </Typography>
+                              </Paper>
+                              <Typography
+                                variant="caption"
+                                sx={{ marginLeft: '0.25rem' }}
+                              >
+                                {new Date(message.createdAt).toLocaleString()}
                               </Typography>
-                            </Paper>
-                            <Typography
-                              variant="caption"
-                              sx={{ marginLeft: '0.25rem' }}
-                            >
-                              {new Date(message.createdAt).toLocaleString()}
-                            </Typography>
-                          </Stack>
+                            </Stack>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    ))}
-                <div ref={divRef}></div>
+                      ))}
+                  <div ref={divRef}></div>
+                </InfiniteScroll>
               </Box>
             </Box>
             <Paper

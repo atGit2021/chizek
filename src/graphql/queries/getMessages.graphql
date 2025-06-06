@@ -1,7 +1,7 @@
 # import MessageFragment from '../fragments/message.fragment.graphql'
 
-query Messages($forumId: String!) {
-  messages(forumId: $forumId) {
+query Messages($forumId: String!, $skip: Int!, $limit: Int!) {
+  messages(forumId: $forumId, skip: $skip, limit: $limit) {
     ...MessageFragment
   }
 }

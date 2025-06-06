@@ -118,6 +118,8 @@ export type QueryForumsArgs = {
 
 export type QueryMessagesArgs = {
   forumId: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+  skip: Scalars['Int']['input'];
 };
 
 export type QueryUserArgs = {
@@ -294,6 +296,8 @@ export type ForumsQuery = {
 
 export type MessagesQueryVariables = Exact<{
   forumId: Scalars['String']['input'];
+  skip: Scalars['Int']['input'];
+  limit: Scalars['Int']['input'];
 }>;
 
 export type MessagesQuery = {
@@ -950,6 +954,25 @@ export const MessagesDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -964,6 +987,22 @@ export const MessagesDocument = {
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'forumId' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' },
                 },
               },
             ],
