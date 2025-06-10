@@ -1,8 +1,14 @@
 import { useQuery } from '@apollo/client';
-import { ForumsDocument, ForumsQuery } from '../gql/graphql';
+import {
+  ForumsDocument,
+  ForumsQuery,
+  ForumsQueryVariables,
+} from '../gql/graphql';
 
-const useGetForums = () => {
-  return useQuery<ForumsQuery>(ForumsDocument);
+const useGetForums = (variables: ForumsQueryVariables) => {
+  return useQuery<ForumsQuery>(ForumsDocument, {
+    variables,
+  });
 };
 
 export { useGetForums };

@@ -42,7 +42,7 @@ const ForumListItem = ({ forum }: { forum: ForumFragmentFragment }) => {
           />
         </ListItemButton>
       </ListItem>
-      <Divider variant="inset" component="li" />
+      <Divider variant="inset" />
     </>
   );
 };

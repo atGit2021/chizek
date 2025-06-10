@@ -1,7 +1,7 @@
 # import ForumFragment from '../fragments/forum.fragment.graphql'
 
-query Forums {
-  forums {
+query Forums($skip: Int!, $limit: Int!) {
+  forums(skip: $skip, limit: $limit) {
     ...ForumFragment
   }
 }
