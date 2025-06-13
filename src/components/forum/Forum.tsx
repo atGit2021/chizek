@@ -59,22 +59,26 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Grid container spacing={2} sx={{ flex: 1 }}>
-        <Grid size={{ xs: 12, md: 9 }}>
+        <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 12' } }}>
           <Stack
             sx={{
               display: 'flex',
               flexDirection: 'column',
               height: '100%',
               paddingX: { xs: 1, md: 2 },
+              alignItems: 'flex-start',
             }}
           >
-            <Box sx={{ flex: 1, overflowY: 'auto', padding: 2 }}>
-              <Typography variant="h4" sx={{ marginBottom: 2 }}>
+            <Box sx={{ flex: 1, overflowY: 'auto', padding: 2, width: '100%' }}>
+              <Typography
+                variant="h4"
+                sx={{ marginBottom: 2, wordBreak: 'break-word' }}
+              >
                 {forum.name}
               </Typography>
               <Box
                 sx={{
-                  maxHeight: 'calc(100vh - 200 px)',
+                  maxHeight: 'calc(100vh - 200px)',
                   overflowY: 'auto',
                 }}
               >
@@ -106,16 +110,25 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
                         <Grid
                           container
                           key={message._id}
-                          alignItems={'center'}
+                          alignItems={'flex-start'}
                           marginBottom={{ xs: '0.5rem', md: '1rem' }}
+                          spacing={2}
+                          wrap="nowrap"
                         >
-                          <Grid size={{ xs: 2, md: 1 }}>
+                          <Grid sx={{ flexShrink: 0 }}>
                             <Avatar src="" sx={{ width: 52, height: 52 }} />
                           </Grid>
-                          <Grid size={{ xs: 10, md: 11 }}>
+                          <Grid sx={{ flexGrow: 1, minWidth: 0 }}>
                             <Stack spacing={0.5}>
-                              <Paper sx={{ width: 'fit-content' }}>
-                                <Typography sx={{ padding: '0.9rem' }}>
+                              <Paper
+                                sx={{ width: 'fit-content', maxWidth: '100%' }}
+                              >
+                                <Typography
+                                  sx={{
+                                    padding: '0.9rem',
+                                    wordBreak: 'break-word',
+                                  }}
+                                >
                                   {message.content}
                                 </Typography>
                               </Paper>
@@ -138,13 +151,14 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
                 p: 0.5,
                 display: 'flex',
                 alignItems: 'center',
-                width: '100%',
+                width: { xs: '100%', sm: '350px' },
                 borderTop: '1px solid #ddd',
                 margin: '1rem 0',
+                alignSelf: 'flex-start',
               }}
             >
               <InputBase
-                sx={{ ml: 1, flex: 1 }}
+                sx={{ ml: 1, flex: 1, width: '100%' }}
                 onChange={(event) => setMessage(event.target.value)}
                 value={message}
                 placeholder="Message"
