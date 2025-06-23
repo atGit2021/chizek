@@ -136,7 +136,10 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
                                 variant="caption"
                                 sx={{ marginLeft: '0.25rem' }}
                               >
-                                {new Date(message.createdAt).toLocaleString()}
+                                {new Date(message.createdAt).toLocaleString()} -{' '}
+                                {new Date(
+                                  message.createdAt,
+                                ).toLocaleDateString()}
                               </Typography>
                             </Stack>
                           </Grid>
