@@ -37,7 +37,7 @@ const Forums = () => {
       <Grid
         sx={{ gridColumn: { xs: 'span 12', md: 'span 3' }, height: '100%' }}
       >
-        <Stack>
+        <Stack sx={{ maxWidth: '300px' }}>
           <ForumListHeader
             handleAddForum={() => setForumListAddVisible(true)}
           />
@@ -45,6 +45,7 @@ const Forums = () => {
           <Box
             sx={{
               width: '100%',
+              maxWidth: '300px',
               bgcolor: 'background.paper',
               maxHeight: '80vh',
               overflow: 'auto',
