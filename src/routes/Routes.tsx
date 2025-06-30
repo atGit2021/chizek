@@ -5,7 +5,7 @@ import HomePage from '../pages/HomePage';
 import PrivateRoute from './PrivateRoute';
 import NotFoundPage from '../pages/NotFoundPage';
 import Forums from '../pages/Forums';
-// import Forum from '../components/forum/Forum';
+import Profile from '../components/profile/Profile';
 
 export const PUBLIC_ROUTES = ['/login', '/register'];
 
@@ -41,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: 'games',
         element: <HomePage />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
       },
     ],
   },
