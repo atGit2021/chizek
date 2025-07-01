@@ -238,7 +238,12 @@ export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCurrentUserQuery = {
   __typename?: 'Query';
-  getCurrentUser: { __typename?: 'User'; _id: string; email: string };
+  getCurrentUser: {
+    __typename?: 'User';
+    _id: string;
+    email: string;
+    username: string;
+  };
 };
 
 export type ForumQueryVariables = Exact<{
@@ -692,6 +697,7 @@ export const GetCurrentUserDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: '_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
