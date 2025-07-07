@@ -22,7 +22,7 @@ const ForumListItem = ({ forum }: { forum: ForumFragmentFragment }) => {
           sx={{ width: '100%', maxWidth: '100%' }}
         >
           <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Remy Sharp" src={forum.latestMessage?.user.imageUrl} />
           </ListItemAvatar>
           <Box
             sx={{ flex: 1, minWidth: 0, overflow: 'hidden', maxWidth: '250px' }}
