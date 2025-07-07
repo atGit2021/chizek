@@ -1,7 +1,5 @@
 query GetCurrentUser {
   getCurrentUser {
-    _id
-    email
-    username
+    ...UserFragment
   }
 }

@@ -39,7 +39,10 @@ const Profile = () => {
       }}
     >
       <Typography variant="h1">{data?.getCurrentUser?.username}</Typography>
-      <Avatar sx={{ width: 256, height: 256 }} />
+      <Avatar
+        sx={{ width: 256, height: 256 }}
+        src={data?.getCurrentUser?.imageUrl}
+      />
       <Button
         component="label"
         variant="contained"

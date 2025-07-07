@@ -4,8 +4,6 @@ fragment MessageFragment on Message {
   createdAt
   forumId
   user {
-    _id
-    email
-    username
+    ...UserFragment
   }
 }
