@@ -116,7 +116,19 @@ const Forum = ({ forum }: { forum: ForumFragmentFragment }) => {
                           wrap="nowrap"
                         >
                           <Grid sx={{ flexShrink: 0 }}>
-                            <Avatar src="" sx={{ width: 52, height: 52 }} />
+                            <Stack
+                              spacing={1}
+                              alignItems={'center'}
+                              justifyContent={'center'}
+                            >
+                              <Avatar
+                                src={message.user.imageUrl}
+                                sx={{ width: 52, height: 52 }}
+                              />
+                              <Typography variant="caption">
+                                {message.user.username}
+                              </Typography>
+                            </Stack>
                           </Grid>
                           <Grid sx={{ flexGrow: 1, minWidth: 0 }}>
                             <Stack spacing={0.5}>
