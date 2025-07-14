@@ -13,9 +13,11 @@ import { onLogout } from '../../utils/onLogout';
 import { snackVar } from '../../constants/snack';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../../constants/errors';
 import router from '../../routes/Routes';
+import { useGetCurrentUser } from '../../hooks/useGetCurrentUser';
 
 const Settings = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const { data } = useGetCurrentUser();
   const { logout } = useLogout();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,7 +32,10 @@ const Settings = () => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="" />
+          <Avatar
+            alt={data?.getCurrentUser?.username || 'Settings'}
+            src={data?.getCurrentUser?.imageUrl}
+          />
         </IconButton>
       </Tooltip>
       <Menu
