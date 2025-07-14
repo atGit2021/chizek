@@ -13,10 +13,6 @@ import { Page } from '../../interfaces/page.interface';
 
 const pages: Page[] = [
   {
-    title: 'Games',
-    path: '/games',
-  },
-  {
     title: 'Forums',
     path: '/forums',
   },

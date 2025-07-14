@@ -10,7 +10,7 @@ const Branding = () => {
         variant="h6"
         noWrap
         component="a"
-        onClick={() => router.navigate('/')}
+        onClick={() => router.navigate('/forums')}
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
