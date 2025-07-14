@@ -10,7 +10,7 @@ const MobileBranding = () => {
         variant="h5"
         noWrap
         component="a"
-        onClick={() => router.navigate('/')}
+        onClick={() => router.navigate('/forums')}
         sx={{
           mr: 2,
           display: { xs: 'flex', md: 'none' },

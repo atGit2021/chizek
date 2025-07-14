@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-import HomePage from '../pages/HomePage';
 import PrivateRoute from './PrivateRoute';
 import NotFoundPage from '../pages/NotFoundPage';
 import Forums from '../pages/Forums';
@@ -24,11 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <HomePage />,
-      },
-      {
-        path: 'home',
-        element: <HomePage />,
+        element: <Forums />,
       },
       {
         path: 'forums/:_id',
@@ -37,10 +32,6 @@ const router = createBrowserRouter([
       {
         path: 'forums',
         element: <Forums />,
-      },
-      {
-        path: 'games',
-        element: <HomePage />,
       },
       {
         path: 'profile',
