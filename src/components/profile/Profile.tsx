@@ -23,6 +23,7 @@ const Profile = () => {
       if (!response.ok) {
         throw new Error('Image upload failed.');
       }
+
       snackVar({ message: 'Image uploaded successfully.', type: 'success' });
     } catch (error) {
       snackVar({ message: `${error}`, type: 'error' });
