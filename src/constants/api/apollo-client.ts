@@ -4,7 +4,7 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { onLogout } from '../../utils/onLogout';
 import { PUBLIC_ROUTES } from '../../routes/Routes';
 import { createClient } from 'graphql-ws';
-import { WS_URL } from './urls';
+import { API_URL, WS_URL } from './urls';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Forum, Message } from '../../gql/graphql';
 
@@ -26,7 +26,7 @@ const isOriginalError = (error: unknown): error is OriginalError => {
   return (error as OriginalError)?.statusCode !== undefined;
 };
 
-const httpLink = new HttpLink({ uri: `/graphql` });
+const httpLink = new HttpLink({ uri: `${API_URL}/graphql` });
 const wsLink = new GraphQLWsLink(
   createClient({
     url: `ws://${WS_URL}/graphql`,
