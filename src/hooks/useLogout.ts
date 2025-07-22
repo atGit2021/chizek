@@ -1,9 +1,10 @@
 import { UNKNOWN_ERROR_MESSAGE } from '../constants/errors';
+import { commonFetch } from '../utils/commonFetch';
 
 const useLogout = () => {
   const logout = async () => {
     try {
-      const res = await fetch(`/auth/logout`, {
+      const res = await commonFetch(`/auth/logout`, {
         method: 'POST',
       });
       if (!res.ok) {

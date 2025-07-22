@@ -3,6 +3,7 @@ import { UploadFile } from '@mui/icons-material';
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser';
 import { API_URL } from '../../constants/api/urls';
 import { snackVar } from '../../constants/snack';
+import { commonFetch } from '../../utils/commonFetch';
 
 const Profile = () => {
   const { data } = useGetCurrentUser();
@@ -16,7 +17,7 @@ const Profile = () => {
       const formData = new FormData();
       formData.append('file', file); //key needs to match backend FileInterceptor name
 
-      const response = await fetch(`${API_URL}/user/image`, {
+      const response = await commonFetch(`${API_URL}/user/image`, {
         method: 'POST',
         body: formData,
       });
