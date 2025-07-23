@@ -1,5 +1,6 @@
 import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import { setContext } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { onLogout } from '../../utils/onLogout';
 import { PUBLIC_ROUTES } from '../../routes/Routes';
@@ -7,6 +8,7 @@ import { createClient } from 'graphql-ws';
 import { API_URL, WS_URL } from './urls';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Forum, Message } from '../../gql/graphql';
+import { getToken } from '../../utils/token';
 
 interface OriginalError {
   statusCode: number;
@@ -26,10 +28,21 @@ const isOriginalError = (error: unknown): error is OriginalError => {
   return (error as OriginalError)?.statusCode !== undefined;
 };
 
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      authorization: getToken(),
+    },
+  };
+});
 const httpLink = new HttpLink({ uri: `${API_URL}/graphql` });
 const wsLink = new GraphQLWsLink(
   createClient({
     url: `ws://${WS_URL}/graphql`,
+    connectionParams: {
+      token: getToken(),
+    },
   }),
 );
 
@@ -62,7 +75,7 @@ const client = new ApolloClient({
       },
     },
   }),
-  link: logoutLink.concat(splitLink),
+  link: logoutLink.concat(authLink).concat(splitLink),
 });
 
 function merge<T extends Forum | Message>(
