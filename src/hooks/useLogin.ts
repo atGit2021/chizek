@@ -3,6 +3,8 @@ import client from '../constants/api/apollo-client';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../constants/errors';
 import { snackVar } from '../constants/snack';
 import { setAuthenticated } from '../utils/setAuthenticatedVar';
+import { setToken } from '../utils/token';
+import { commonFetch } from '../utils/commonFetch';
 
 interface LoginRequest {
   email: string;
@@ -14,7 +16,7 @@ const useLogin = () => {
 
   const login = async (request: LoginRequest) => {
     try {
-      const res = await fetch(`/auth/login`, {
+      const res = await commonFetch(`/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,8 +34,9 @@ const useLogin = () => {
         return;
       }
 
-      setError('');
+      setToken(await res.text());
       setAuthenticated(true);
+      setError('');
       await client.refetchQueries({ include: 'active' });
     } catch {
       setAuthenticated(false);
