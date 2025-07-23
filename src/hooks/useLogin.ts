@@ -34,7 +34,14 @@ const useLogin = () => {
         return;
       }
 
-      setToken(await res.text());
+      const { token } = await res.json();
+      if (!token) {
+        setAuthenticated(false);
+        setError('Token not found in response.');
+        return;
+      }
+
+      setToken(token);
       setAuthenticated(true);
       setError('');
       await client.refetchQueries({ include: 'active' });
