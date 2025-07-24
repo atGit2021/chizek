@@ -1,10 +1,13 @@
+import { API_URL } from '../constants/api/urls';
 import { getToken } from './token';
 
 export const commonFetch = async (
   input: RequestInfo,
   init: RequestInit = {},
 ) => {
-  return fetch(input, {
+  const url = `${API_URL}${input}`;
+
+  return fetch(url, {
     ...init,
     headers: {
       ...(init.headers || {}),
