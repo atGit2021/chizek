@@ -9,6 +9,7 @@ export const commonFetch = async (
     headers: {
       ...(init.headers || {}),
       authorization: getToken(),
+      'Content-Type': 'application/json',
     },
   });
 };
