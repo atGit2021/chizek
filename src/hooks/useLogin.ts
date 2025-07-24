@@ -34,18 +34,20 @@ const useLogin = () => {
         return;
       }
 
-      const { token } = await res.json();
-      if (!token) {
+      const data = await res.json();
+      console.log('Response data: ', data);
+      if (!data.token) {
         setAuthenticated(false);
         setError('Token not found in response.');
         return;
       }
 
-      setToken(token);
+      setToken(data.token);
       setAuthenticated(true);
       setError('');
       await client.refetchQueries({ include: 'active' });
-    } catch {
+    } catch (error) {
+      console.log('Login Error', error);
       setAuthenticated(false);
       snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
     }
