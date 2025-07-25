@@ -6,13 +6,17 @@ export const commonFetch = async (
   init: RequestInit = {},
 ) => {
   const url = `${API_URL}${input}`;
+  const token = getToken();
+  const isFormData = init.body instanceof FormData;
 
+  const headers = {
+    ...(init.headers || {}),
+    ...(token ? { authorization: token } : {}),
+    ...(!isFormData ? { 'Content-Type': 'application/json' } : {}),
+  };
   return fetch(url, {
     ...init,
-    headers: {
-      ...(init.headers || {}),
-      authorization: getToken(),
-      'Content-Type': 'application/json',
-    },
+    credentials: 'include',
+    headers,
   });
 };
