@@ -16,7 +16,6 @@ export const commonFetch = async (
   };
   return fetch(url, {
     ...init,
-    credentials: 'include',
     headers,
   });
 };
