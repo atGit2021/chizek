@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useLogout } from '../../hooks/useLogout';
 import { onLogout } from '../../utils/onLogout';
 import { snackVar } from '../../constants/snack';
 import { UNKNOWN_ERROR_SNACK_MESSAGE } from '../../constants/errors';
@@ -18,7 +17,6 @@ import { useGetCurrentUser } from '../../hooks/useGetCurrentUser';
 const Settings = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { data } = useGetCurrentUser();
-  const { logout } = useLogout();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -61,8 +59,7 @@ const Settings = () => {
           key="logout"
           onClick={async () => {
             try {
-              await logout();
-              onLogout();
+              await onLogout();
               handleCloseUserMenu();
             } catch {
               snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
