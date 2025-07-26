@@ -11,7 +11,7 @@ export const commonFetch = async (
 
   const headers = {
     ...(init.headers || {}),
-    ...(token ? { authorization: token } : {}),
+    ...(token ? { authorization: `Bearer ${token}` } : {}),
     ...(!isFormData ? { 'Content-Type': 'application/json' } : {}),
   };
   return fetch(url, {

@@ -29,10 +29,12 @@ const isOriginalError = (error: unknown): error is OriginalError => {
 };
 
 const authLink = setContext((_, { headers }) => {
+  const token = getToken();
+
   return {
     headers: {
       ...headers,
-      authorization: getToken(),
+      authorization: token ? `Bearer ${token}` : '',
     },
   };
 });
